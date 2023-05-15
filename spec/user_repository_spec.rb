@@ -35,4 +35,15 @@ RSpec.describe UserRepository do
       )
     end
   end
+
+  describe "#find" do
+    it 'finds the user information with id 1' do
+      repo = UserRepository.new
+      user = repo.find(1)
+
+      expect(user.id).to eq(1)
+      expect(user.email).to eq('julian@example.com')
+      expect(user.password).to eq('asdasd')
+    end
+  end
 end
