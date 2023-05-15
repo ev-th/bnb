@@ -19,7 +19,7 @@ RSpec.describe UserRepository do
   end
 
   describe "#create" do
-    xit 'adds a user to the database' do
+    it 'adds a user to the database' do
       repo = UserRepository.new
       user = User.new
       user.email = 'test_1@example.com'
