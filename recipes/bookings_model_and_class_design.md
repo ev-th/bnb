@@ -258,15 +258,14 @@ This is so you get a fresh table contents every time you run the test suite.
 
 # file: spec/users_repository_spec.rb
 
-def reset_users_table
-  seed_sql = File.read('spec/user_seeds.sql')
-  connection = PG.connect({ host: '127.0.0.1', dbname: 'chitter_table_test' })
+def reset_bookings_table
+  seed_sql = File.read('seeds.sql')
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'bnb_database_test' })
   connection.exec(seed_sql)
 end
 
-describe UsersRepository do
   before(:each) do 
-    reset_users_table
+    reset_booking_table
   end
 
   # file: spec/posts_repository_spec.rb
