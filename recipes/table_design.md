@@ -37,11 +37,11 @@ CREATE TABLE users (
 CREATE TABLE listings (
   id SERIAL PRIMARY KEY,
   name text,
-  price float,
+  price integer,
   description text,
   start_date DATE,
   end_date DATE,
-  user_id int,
+  user_id integer,
   constraint fk_user foreign key(user_id)
     references users(id)
     on delete cascade
