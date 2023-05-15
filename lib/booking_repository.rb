@@ -40,6 +40,15 @@ class BookingRepository
 
     return nil
   end
+
+  def confirm_booking(booking) 
+    sql = 'UPDATE bookings SET confirmed = $1 WHERE id = $2;'
+    booking.confirmed = true
+    sql_params = [booking.confirmed, booking.id]
+    DatabaseConnection.exec_params(sql, sql_params)
+
+    return nil
+  end
   private
 
   # The confirmed column is a boolean data type in PSQL, but when the PG gem fetches it from ruby

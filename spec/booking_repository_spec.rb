@@ -66,5 +66,16 @@ RSpec.describe BookingRepository do
     expect(last_booking.listing_id).to eq 2
     expect(last_booking.user_id).to eq 2
     end
+    context '#confirm_booking(booking)' do
+      it 'turns a false to true to confrim a booking' do
+        repo = BookingRepository.new
+
+        booking = repo.find(1)
+
+        repo.confirm_booking(booking)
+
+        expect(booking.confirmed).to eq true
+      end
+    end
   end
 end
