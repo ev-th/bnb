@@ -28,7 +28,7 @@ describe ListingRepository do
 
   end
 
-  xit 'creates a new listing' do
+  it 'creates a new listing' do
     repo = ListingRepository.new
     new_listing = Listing.new
     new_listing.name = 'listing_3'
