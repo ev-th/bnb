@@ -16,6 +16,15 @@ RSpec.describe UserRepository do
       repo = UserRepository.new
       expect(repo.all.length).to eq 2
     end
+
+    it 'returns the details for user at id 1' do
+      repo = UserRepository.new
+      users = repo.all
+
+      expect(users.first.id).to eq(1)
+      expect(users.first.email).to eq('julian@example.com')
+      expect(users.first.password).to eq('asdasd')
+    end
   end
 
   describe "#create" do
@@ -44,6 +53,15 @@ RSpec.describe UserRepository do
       expect(user.id).to eq(1)
       expect(user.email).to eq('julian@example.com')
       expect(user.password).to eq('asdasd')
+    end
+
+    it 'finds the user information with id 2' do
+      repo = UserRepository.new
+      user = repo.find(2)
+
+      expect(user.id).to eq(2)
+      expect(user.email).to eq('andrea@example.com')
+      expect(user.password).to eq('dsadsa')
     end
   end
 end
