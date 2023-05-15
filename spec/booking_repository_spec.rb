@@ -47,6 +47,24 @@ RSpec.describe BookingRepository do
       expect(second_booking.user_id).to eq 2      
     end
   end
+  context '#create(booking)' do
+    it 'creates a new booking and adds it to the database' do
+    repo = BookingRepository.new
 
-  
+    new_booking = Booking.new
+    new_booking.date= '2023-06-16'
+    new_booking.confirmed = false
+    new_booking.listing_id = 2
+    new_booking.user_id = 2
+
+    repo.create(new_booking)
+
+    last_booking = repo.find(4)
+
+    expect(last_booking.date).to eq '2023-06-16'
+    expect(last_booking.confirmed).to eq false
+    expect(last_booking.listing_id).to eq 2
+    expect(last_booking.user_id).to eq 2
+    end
+  end
 end

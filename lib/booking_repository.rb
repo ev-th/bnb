@@ -16,6 +16,7 @@ class BookingRepository
     return booking
    end
 
+  # returns an array of booking objects that have the same listing id
   def find_by_listing(listing_id)
    sql = "SELECT id, date, confirmed, listing_id, user_id FROM bookings WHERE listing_id = $1;"
    sql_params = [listing_id]
@@ -32,6 +33,13 @@ class BookingRepository
    return bookings
   end
 
+  def create(booking)
+    sql = 'INSERT INTO bookings (date, confirmed, listing_id, user_id) VALUES($1, $2, $3, $4);'
+    sql_params = [booking.date, booking.confirmed, booking.listing_id, booking.user_id]
+    DatabaseConnection.exec_params(sql, sql_params)
+
+    return nil
+  end
   private
 
   # The confirmed column is a boolean data type in PSQL, but when the PG gem fetches it from ruby
