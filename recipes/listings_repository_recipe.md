@@ -73,30 +73,28 @@ class ListingRepository
   # No arguments
   def all
     # Executes the SQL query:
-    # SELECT id, name, cohort_name FROM students;
+    # SELECT id, name, price, description, start_date, end_date, user_id FROM listings;
 
-    # Returns an array of Student objects.
+    # Returns an array of Listing objects.
+  end
+
+  def create(listing)
+    # Executes the SQL query:
+    # INSERT INTO listings (name, price, description, start_date, end_date, user_id) VALUES ($1, $2, $3, $4, $5, $6);
+
+    # return nothing
   end
 
   # Gets a single record by its ID
   # One argument: the id (number)
-  def find(id)
-    # Executes the SQL query:
-    # SELECT id, name, cohort_name FROM students WHERE id = $1;
+  # def find(id)
+  #   # Executes the SQL query:
+  #   # SELECT id, name, cohort_name FROM students WHERE id = $1;
 
-    # Returns a single Student object.
-  end
+  #   # Returns a single Student object.
+  # end
 
   # Add more methods below for each operation you'd like to implement.
-
-  # def create(student)
-  # end
-
-  # def update(student)
-  # end
-
-  # def delete(student)
-  # end
 end
 ```
 
@@ -110,32 +108,55 @@ These examples will later be encoded as RSpec tests.
 # EXAMPLES
 
 # 1
-# Get all students
+# Get all listings
 
-repo = StudentRepository.new
+repo = ListingRepository.new
 
-students = repo.all
+listings = repo.all
 
-students.length # =>  2
+listings.length # =>  2
 
-students[0].id # =>  1
-students[0].name # =>  'David'
-students[0].cohort_name # =>  'April 2022'
+listings[0].id # =>  '1'
+listings[0].name # =>  'listing_1'
+listings[0].description # =>  'sunny place'
 
-students[1].id # =>  2
-students[1].name # =>  'Anna'
-students[1].cohort_name # =>  'May 2022'
+listings[1].start_date # =>  '2024-05-03'
+listings[1].end_date # =>  '2024-06-23'
+listings[1].user_id # =>  '2'
 
 # 2
-# Get a single student
+# create a new listing
 
-repo = StudentRepository.new
+repo = ListingRepository.new
+new_listing = Listing.new
+new_listing.name = 'listing_3'
+new_listing.price = '1750'
+new_listing.description = 'cloudy place'
+new_listing.start_date = '2024-05-15'
+new_listing.end_date = '2024-07-23'
+new_listing.user_id = '1'
+repo.create(new_listing)
 
-student = repo.find(1)
+listings = repo.all
 
-student.id # =>  1
-student.name # =>  'David'
-student.cohort_name # =>  'April 2022'
+listings.length # =>  3
+listings.last.name # =>  'listing_3'
+listings.last.description # =>  'cloudy place'
+listings.last.price # =>  '1750'
+
+
+
+
+# # 2
+# # Get a single student
+
+# repo = StudentRepository.new
+
+# student = repo.find(1)
+
+# student.id # =>  1
+# student.name # =>  'David'
+# student.cohort_name # =>  'April 2022'
 
 # Add more examples for each method
 ```
