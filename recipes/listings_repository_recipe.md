@@ -172,17 +172,17 @@ This is so you get a fresh table contents every time you run the test suite.
 ```ruby
 # EXAMPLE
 
-# file: spec/student_repository_spec.rb
+# file: spec/listing_repository_spec.rb
 
-def reset_students_table
-  seed_sql = File.read('spec/seeds_students.sql')
-  connection = PG.connect({ host: '127.0.0.1', dbname: 'students' })
+def reset_tables
+  seed_sql = File.read('spec/seeds.sql')
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'bnb_database_test' })
   connection.exec(seed_sql)
 end
 
-describe StudentRepository do
+describe ListingRepository do
   before(:each) do 
-    reset_students_table
+    reset_tables
   end
 
   # (your tests will go here).
