@@ -25,10 +25,9 @@ class ListingRepository
   end
 
   def create(listing)
-    # Executes the SQL query:
-    # INSERT INTO listings (name, price, description, start_date, end_date, user_id) VALUES ($1, $2, $3, $4, $5, $6);
-
-    # return nothing
+    sql = 'INSERT INTO listings (name, price, description, start_date, end_date, user_id) VALUES ($1, $2, $3, $4, $5, $6);'
+    params = [listing.name, listing.price, listing.description, listing.start_date, listing.end_date, listing.user_id]
+    DatabaseConnection.exec_params(sql, params)
   end
 
   # Gets a single record by its ID
