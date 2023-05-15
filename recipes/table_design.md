@@ -50,7 +50,7 @@ Put the different nouns in this table. Replace the example with your own nouns.
 
 ## 3. Decide the column types.
 
-[Here's a full documentation of PostgreSQL data types](https://www.postgresql.org/docs/current/datatype.html).
+[Here's a full documentation of PostgreSQL data types](https://git pullwww.postgresql.org/docs/current/datatype.html).
 
 Most of the time, you'll need either `text`, `int`, `bigint`, `numeric`, or `boolean`. If you're in doubt, do some research or ask your peers.
 
