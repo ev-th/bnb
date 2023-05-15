@@ -1,138 +1,67 @@
 # Two Tables Design Recipe Template
 
-_Copy this recipe template to design and create two related database tables from a specification._
-
 ## 1. Extract nouns from the user stories or specification
 
 ```
-# EXAMPLE USER STORY:
-# (analyse only the relevant part - here the final line).
 
-As a music lover,
-So I can organise my records,
-I want to keep a list of albums' titles.
+Any signed-up user can list a new space.
 
-As a music lover,
-So I can organise my records,
-I want to keep a list of albums' release years.
+Users can list multiple spaces.
 
-As a music lover,
-So I can organise my records,
-I want to keep a list of artists' names.
+Users should be able to name their space, 
+provide a short description of the space, 
+and a price per night.
 
-As a music lover,
-So I can organise my records,
-I want to know each album's artist.
+Users should be able to offer a range of dates where their space is available.
+
+Any signed-up user can request to hire any space for one night, 
+and this should be approved by the user that owns that space.
+
+Nights for which a space has already been booked 
+should not be available for users to book that space.
+
+Until a user has confirmed a booking request, 
+that space can still be booked for that night.
 ```
-
-```
-Nouns:
-
-album, title, release year, artist, name
-```
-
-## 2. Infer the Table Name and Columns
-
-Put the different nouns in this table. Replace the example with your own nouns.
-
-| Record                | Properties          |
-| --------------------- | ------------------  |
-| album                 | title, release year
-| artist                | name
-
-1. Name of the first table (always plural): `albums` 
-
-    Column names: `title`, `release_year`
-
-2. Name of the second table (always plural): `artists` 
-
-    Column names: `name`
-
-## 3. Decide the column types.
-
-[Here's a full documentation of PostgreSQL data types](https://git pullwww.postgresql.org/docs/current/datatype.html).
-
-Most of the time, you'll need either `text`, `int`, `bigint`, `numeric`, or `boolean`. If you're in doubt, do some research or ask your peers.
-
-Remember to **always** have the primary key `id` as a first column. Its type will always be `SERIAL`.
-
-```
-# EXAMPLE:
-
-Table: albums
-id: SERIAL
-title: text
-release_year: int
-
-Table: artists
-id: SERIAL
-name: text
-```
-
-## 4. Decide on The Tables Relationship
-
-Most of the time, you'll be using a **one-to-many** relationship, and will need a **foreign key** on one of the two tables.
-
-To decide on which one, answer these two questions:
-
-1. Can one [TABLE ONE] have many [TABLE TWO]? (Yes/No)
-2. Can one [TABLE TWO] have many [TABLE ONE]? (Yes/No)
-
-You'll then be able to say that:
-
-1. **[A] has many [B]**
-2. And on the other side, **[B] belongs to [A]**
-3. In that case, the foreign key is in the table [B]
-
-Replace the relevant bits in this example with your own:
-
-```
-# EXAMPLE
-
-1. Can one artist have many albums? YES
-2. Can one album have many artists? NO
-
--> Therefore,
--> An artist HAS MANY albums
--> An album BELONGS TO an artist
-
--> Therefore, the foreign key is on the albums table.
-```
-
-*If you can answer YES to the two questions, you'll probably have to implement a Many-to-Many relationship, which is more complex and needs a third table (called a join table).*
 
 ## 4. Write the SQL.
 
 ```sql
--- EXAMPLE
--- file: albums_table.sql
 
--- Replace the table name, columm names and types.
-
--- Create the table without the foreign key first.
-CREATE TABLE artists (
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  name text,
+  email text,
+  password text
 );
 
--- Then the table with the foreign key first.
-CREATE TABLE albums (
+
+CREATE TABLE listings (
   id SERIAL PRIMARY KEY,
-  title text,
-  release_year int,
--- The foreign key name is always {other_table_singular}_id
-  artist_id int,
-  constraint fk_artist foreign key(artist_id)
-    references artists(id)
+  name text,
+  price money,
+  description text,
+  start_date timestamp,
+  end_date timestamp,
+  user_id int,
+  constraint fk_user foreign key(user_id)
+    references users(id)
     on delete cascade
 );
 
-```
+CREATE TABLE bookings (
+  id SERIAL PRIMARY KEY,
+  date timestamp,
+  confirmation_status boolean,
+  listing_id integer,
+  user_id integer,
+  constraint fk_user foreign key(user_id)
+    references users(id)
+    on delete cascade,
+  constraint fk_listing foreign key(listing_id)
+    references listings(id)
+    on delete cascade
+);
 
-## 5. Create the tables.
-
-```bash
-psql -h 127.0.0.1 database_name < albums_table.sql
 ```
 
 <!-- BEGIN GENERATED SECTION DO NOT EDIT -->
