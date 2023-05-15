@@ -87,11 +87,11 @@ class ListingRepository
 
   # Gets a single record by its ID
   # One argument: the id (number)
+
   # def find(id)
   #   # Executes the SQL query:
-  #   # SELECT id, name, cohort_name FROM students WHERE id = $1;
+  #   # SELECT id, name, price, description, start_date, end_date, user_id FROM listings WHERE user_id = $1;
 
-  #   # Returns a single Student object.
   # end
 
   # Add more methods below for each operation you'd like to implement.
@@ -147,16 +147,20 @@ listings.last.price # =>  '1750'
 
 
 
-# # 2
-# # Get a single student
+# # 3
+# Gets a single listing
 
-# repo = StudentRepository.new
+repo = StudentRepository.new
 
-# student = repo.find(1)
+listing = repo.find(1)
 
-# student.id # =>  1
-# student.name # =>  'David'
-# student.cohort_name # =>  'April 2022'
+listing.id # =>  1
+listing.name # =>  'listing_1'
+listing.price # =>  '1000'
+listing.description # =>  'sunny place'
+listing.start_date # =>  '2024-04-08'
+listing.end_date # =>  '2024-05-09'
+listing.user_id # =>  '1'
 
 # Add more examples for each method
 ```
