@@ -1,4 +1,5 @@
 require_relative 'user'
+# require 'bcrypt'
 
 class UserRepository
   def all
@@ -12,6 +13,8 @@ class UserRepository
   end
   
   def create(user)
+    # password = BCrypt::Password.create(user.password)
+
     sql = 'INSERT INTO users(email, password) VALUES ($1, $2);'
     params = [user.email, user.password]
     result_set = DatabaseConnection.exec_params(sql, params)

@@ -7,6 +7,8 @@ require_relative 'lib/database_connection'
 DatabaseConnection.connect('bnb_database_test')
 
 class Application < Sinatra::Base
+  enable :sessions
+
   configure :development do
     register Sinatra::Reloader
   end
@@ -35,6 +37,9 @@ class Application < Sinatra::Base
   end
 
   post '/signup' do
+    listing_repo = ListingRepository.new
+    @listings = listing_repo.all
+    
     user = User.new
     user.email = params[:email]
     user.password = params[:password]
