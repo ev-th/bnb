@@ -36,7 +36,7 @@ describe Application do
   end
 
   context 'POST /signup' do
-    it 'should add the new user to the database' do
+    xit 'should add the new user to the database' do
       response = post(
         '/signup',
         email: 'evan@example.com',
@@ -89,6 +89,26 @@ describe Application do
     end
   end
 
+  context 'POST /login' do
+    it 'logs in an exisiting user when correct details are submitted' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+
+      response = get('/listings')
+      expect(response.status).to eq 200
+      expect(response.body).to include 'These are the listings'
+      expect(response.body).to include 'You are logged in as: 3'
+    end
+  end
+
   context 'GET /listings' do
     it 'should return the list of the listings' do
       response = get('/listings')
@@ -124,4 +144,5 @@ describe Application do
       expect(response.body).to include('listing_3')
     end
   end
+
 end

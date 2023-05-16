@@ -20,6 +20,7 @@ class Application < Sinatra::Base
   get '/listings' do
     repo = ListingRepository.new
     @listings = repo.all
+    @current_id = session[:user_id]
 
     return erb(:listings)
   end
@@ -50,7 +51,30 @@ class Application < Sinatra::Base
       status 400
       return erb(:signup_fail)
     else
+      return erb(:index)
+    end
+  end
+
+  post '/login' do
+    listing_repo = ListingRepository.new
+    @listings = listing_repo.all
+
+    email = params[:email]
+    password = params[:password]
+
+    repo = UserRepository.new
+    user = repo.find_by_email(email)
+  
+    sign_in_status = repo.password_correct?(user.password, password)
+
+    if sign_in_status == true
+
+      session[:user_id] = user.id
+      @current_id = session[:user_id]
+      
       return erb(:listings)
+    else
+      return erb(:signup_fail)
     end
   end
 end
