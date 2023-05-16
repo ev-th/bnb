@@ -14,14 +14,6 @@ class Application < Sinatra::Base
     return erb(:index)
   end
   
-  get '/listings/:id' do
-    repo = ListingRepository.new
-
-    @listing = repo.find(params[:id])
-
-    return erb(:listing)
-  end
-
   get '/listings' do
     repo = ListingRepository.new
     @listings = repo.all
@@ -31,6 +23,14 @@ class Application < Sinatra::Base
 
   get '/listings/new' do
     return erb(:new_listing)
+  end
+
+  get '/listings/:id' do
+    repo = ListingRepository.new
+
+    @listing = repo.find(params[:id])
+
+    return erb(:listing)
   end
 
   post '/listings/new' do
