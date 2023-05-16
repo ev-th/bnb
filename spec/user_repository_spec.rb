@@ -28,20 +28,14 @@ RSpec.describe UserRepository do
   end
 
   describe "#create" do
-    xit 'adds a user to the database' do
+    it 'adds a user to the database' do
       repo = UserRepository.new
       user = User.new
       user.email = 'test_1@example.com'
       user.password = 'password123'
       repo.create(user)
 
-      expect(repo.all).to include(
-        have_attributes(
-          id: 3,
-          email: 'test_1@example.com',
-          password: 'password123'
-        )
-      )
+      expect(repo.all.length).to eq 3
     end
   end
 

@@ -19,7 +19,7 @@ describe Application do
 
 
   context 'GET /' do
-    xit 'should get the homepage' do
+    it 'should get the homepage' do
       response = get('/')
 
       expect(response.status).to eq(200)
@@ -36,20 +36,23 @@ describe Application do
   end
 
   context 'POST /signup' do
-    xit 'should add the new user to the database' do
+    it 'should add the new user to the database' do
       response = post(
         '/signup',
         email: 'evan@example.com',
         password: 'pass'
       )
-      
-      repo = UserRepository.new
-      expect(repo.all).to include(
-        have_attributes(
-          email: 'evan@example.com',
-          password: 'pass'
-        )
+
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
       )
+      
+      response = get('/listings')
+      expect(response.status).to eq 200
+      expect(response.body).to include 'These are the listings'
+      expect(response.body).to include 'You are logged in as: 3'
     end
     
     it 'redirects to listings page on success' do
