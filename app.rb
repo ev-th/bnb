@@ -17,19 +17,11 @@ class Application < Sinatra::Base
   get '/listings/:id' do
     repo = ListingRepository.new
 
-    @listing_id = repo.find(params[:id])
+    @listing = repo.find(params[:id])
 
-    return erb(:listings_id)
+    return erb(:listing)
   end
 end
-
-    # repo = AlbumRepository.new
-    # artist_repo = ArtistRepository.new
-
-    # @album = repo.find(params[:id])
-    # @artist = artist_repo.find(@album.artist_id)
-
-    # return erb(:album)
 
 # Returns an html view with a calendar available dates for a listing. 
 # User can choose on a date and click ‘request to book’ button 
