@@ -23,6 +23,10 @@ describe Application do
       response = get('/')
 
       expect(response.status).to eq(200)
+      expect(response.body).to include('<form method="POST" action="/signup">')
+      expect(response.body).to include('<input type="text" name="email">')
+      expect(response.body).to include('<input type="text" name="password">')
+      expect(response.body).to include('<input type="submit">')
     end
   end
 end
