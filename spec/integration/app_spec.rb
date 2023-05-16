@@ -25,4 +25,14 @@ describe Application do
       expect(response.status).to eq(200)
     end
   end
+
+  context 'GET /listings' do
+    it 'should return the list of the listings' do
+      response = get('/listings')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('listing_1')
+      expect(response.body).to include('listing_2')
+    end
+  end
 end

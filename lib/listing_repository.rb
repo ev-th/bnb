@@ -1,4 +1,4 @@
-require 'listing'
+require_relative 'listing'
 
 class ListingRepository
 
