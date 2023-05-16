@@ -22,8 +22,8 @@ describe Application do
       response = get('/listings/1')
       expect(response.status).to eq(200)
       expect(response.body).to include ('listing_1')
-      expect(response.body).to include ('<form method="POST" action="/listing/:id/booking">')
-      expect(response.body).to include ('<input type="date" id="date" min="2023-04-08" max="2023-05-09">')
+      expect(response.body).to include ('<form method="POST" action="/listings/1/booking">')
+      expect(response.body).to include ('<input type="date" name="date" min="2023-04-08" max="2023-05-09">')
       expect(response.body).to include ('<input type="submit", value="request to book">')
     end
 
@@ -31,9 +31,25 @@ describe Application do
       response = get('/listings/2')
       expect(response.status).to eq(200)
       expect(response.body).to include ('listing_2')
-      expect(response.body).to include ('<form method="POST" action="/listing/:id/booking">')
-      expect(response.body).to include ('<input type="date" id="date" min="2024-05-03" max="2024-06-23">')
+      expect(response.body).to include ('<form method="POST" action="/listings/2/booking">')
+      expect(response.body).to include ('<input type="date" name="date" min="2024-05-03" max="2024-06-23">')
       expect(response.body).to include ('<input type="submit", value="request to book">')
+    end
+  end
+  context 'POST /listings/:id/booking' do
+    it 'posts a selected date to bookings' do
+    response = post('/listings/1/booking', date: '2023-04-10', confirmed: false, listing_id: '1', user_id: '1')
+    expect(response.status).to eq(200)
+    expect(response.body).to eq('')
+
+    repo = BookingRepository.new
+    new_booking = repo.find(4)
+
+    expect(new_booking.id).to eq 4
+    expect(new_booking.date).to eq '2023-04-10'
+    expect(new_booking.confirmed).to eq false
+    expect(new_booking.listing_id).to eq 1
+    expect(new_booking.user_id).to eq 1
     end
   end
 end

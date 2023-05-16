@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
 require_relative 'lib/listing_repository'
+require_relative 'lib/booking_repository'
 require_relative 'lib/user_repository'
 require_relative 'lib/database_connection'
 
@@ -35,6 +36,19 @@ class Application < Sinatra::Base
     @listing = repo.find(params[:id])
 
     return erb(:listing)
+  end
+  # adds an unconfirmed booking to the bookings table. ISSUE: Does not currently have a way to assign a user id.
+  # will need to revisit once we've implmented log in/log out and sessions.
+  post '/listings/:id/booking' do
+    repo = BookingRepository.new
+    @new_booking = Booking.new
+    @new_booking.date = params[:date]
+    @new_booking.confirmed = false
+    @new_booking.listing_id = params[:id]
+    @new_booking.user_id = params[:user_id]
+
+    repo.create(@new_booking)
+    return ('') 
   end
 
   post '/listings/new' do
