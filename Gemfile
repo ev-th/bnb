@@ -13,3 +13,5 @@ gem "rack-test", "~> 1.1"
 gem "rspec"
 
 gem "rainbow", "~> 3.1"
+
+gem "bcrypt", "~> 3.1"
