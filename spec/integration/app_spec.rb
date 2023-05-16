@@ -112,14 +112,26 @@ describe Application do
 
   context 'POST /listings/new' do
     it 'should add a new listing' do
-      response = post('/listings/new',
-          name: 'listing_3')
+      response = post(
+        '/listings/new',
+        name: 'listing_3',
+        price: '250',
+        description: 'mud hut',
+        start_date: '2023-05-16',
+        end_date: '2023-07-16',
+        user_id: '2'
+      )
           
       repo = ListingRepository.new
       
       listings = repo.all
       expect(listings.length).to eq(3)
       expect(listings.last.name).to eq('listing_3')
+      expect(listings.last.price).to eq('250')
+      expect(listings.last.description).to eq('mud hut')
+      expect(listings.last.start_date).to eq('2023-05-16')
+      expect(listings.last.end_date).to eq('2023-07-16')
+      expect(listings.last.user_id).to eq('2')
 
       response = get('/listings')
       expect(response.body).to include('listing_3')
