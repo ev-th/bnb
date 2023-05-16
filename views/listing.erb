@@ -1,7 +1,3 @@
-<%# # Returns an html view with a calendar available dates for a listing. 
-# User can choose on a date and click ‘request to book’ button 
-# to create a booking request on the database table.
-# dates for confirmed bookings shouldn’t be selectable. %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,7 +7,7 @@
     <body>
         <h1> <%= @listing.name %> </h1>
         <form method="POST" action="/listing/:id/booking">
-          <input type="date" id="date" min="<%= @listing.start_date %>" max="<%= @listing.end_date %> ">
+          <input type="date" id="date" min="<%= @listing.start_date %>" max="<%= @listing.end_date %>">
           <input type="submit", value="request to book">
         </form>  
     </body>

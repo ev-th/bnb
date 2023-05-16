@@ -22,8 +22,3 @@ class Application < Sinatra::Base
     return erb(:listing)
   end
 end
-
-# Returns an html view with a calendar available dates for a listing. 
-# User can choose on a date and click ‘request to book’ button 
-# to create a booking request on the database table.
-# dates for confirmed bookings shouldn’t be selectable.
