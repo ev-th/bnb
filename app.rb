@@ -45,7 +45,7 @@ class Application < Sinatra::Base
       status 400
       return erb(:signup_fail)
     else
-      return erb(:signup_success)
+      return erb(:listings)
     end
   end
 end
