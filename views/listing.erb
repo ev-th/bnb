@@ -6,7 +6,7 @@
     </head>
     <body>
         <h1> <%= @listing.name %> </h1>
-        <form method="POST" action="/listing/:id/booking">
+        <form method="POST" action="/listings/:id/booking">
           <input type="date" id="date" min="<%= @listing.start_date %>" max="<%= @listing.end_date %>">
           <input type="submit", value="request to book">
         </form>  

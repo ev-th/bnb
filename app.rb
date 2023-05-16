@@ -33,6 +33,18 @@ class Application < Sinatra::Base
     return erb(:listing)
   end
 
+  post '/listings/:id/booking' do
+    repo = BookingRepository.new
+    new_booking = Booking.new
+    new_booking.date = params[:date]
+    new_booking.confirmed = params[:confirmed]
+    new_booking.listing_id = params[:listing_id]
+    new_booking.user_id = params[:user_id]
+
+    repo.create(new_booking)
+    return ('') 
+  end
+
   post '/listings/new' do
     repo = ListingRepository.new
     new_listing = Listing.new
