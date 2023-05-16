@@ -45,4 +45,20 @@ describe Application do
       expect(response.body).to include('<form method="POST" action="/listings/new">')
     end
   end
+
+  context 'POST /listings/new' do
+    it 'should add a new listing' do
+      response = post('/listings/new',
+          name: 'listing_3')
+          
+      repo = ListingRepository.new
+      
+      listings = repo.all
+      expect(listings.length).to eq(3)
+      expect(listings.last.name).to eq('listing_3')
+
+      response = get('/listings')
+      expect(response.body).to include('listing_3')
+    end
+  end
 end

@@ -23,4 +23,12 @@ class Application < Sinatra::Base
   get '/listings/new' do
     return erb(:new_listing)
   end
+
+  post '/listings/new' do
+    repo = ListingRepository.new
+    new_listing = Listing.new
+    
+    new_listing.name = params[:name]
+    repo.create(new_listing)
+  end
 end
