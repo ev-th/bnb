@@ -22,7 +22,7 @@ describe Application do
       response = get('/listings/1')
       expect(response.status).to eq(200)
       expect(response.body).to include ('listing_1')
-      expect(response.body).to include ('<form method="POST" action="/listings/:id/booking">')
+      expect(response.body).to include ('<form method="POST" action="/listings/1/booking">')
       expect(response.body).to include ('<input type="date" name="date" min="2023-04-08" max="2023-05-09">')
       expect(response.body).to include ('<input type="submit", value="request to book">')
     end
@@ -31,7 +31,7 @@ describe Application do
       response = get('/listings/2')
       expect(response.status).to eq(200)
       expect(response.body).to include ('listing_2')
-      expect(response.body).to include ('<form method="POST" action="/listings/:id/booking">')
+      expect(response.body).to include ('<form method="POST" action="/listings/2/booking">')
       expect(response.body).to include ('<input type="date" name="date" min="2024-05-03" max="2024-06-23">')
       expect(response.body).to include ('<input type="submit", value="request to book">')
     end
