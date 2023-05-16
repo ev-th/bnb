@@ -9,6 +9,8 @@
 
         <% @listings.each do |listing| %>
           <p><%= listing.name %></p>
+          <p><%= listing.description %></p>
+          <p>£<%= listing.price %></p>
         <% end %>
     </body>
 </html>

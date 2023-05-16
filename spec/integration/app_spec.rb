@@ -89,8 +89,14 @@ describe Application do
       response = get('/listings')
 
       expect(response.status).to eq(200)
+
       expect(response.body).to include('listing_1')
+      expect(response.body).to include('sunny place')
+      expect(response.body).to include('£1000')
+      
       expect(response.body).to include('listing_2')
+      expect(response.body).to include('city penthouse')
+      expect(response.body).to include('£1500')
     end
   end
 
