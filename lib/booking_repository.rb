@@ -40,7 +40,7 @@ class BookingRepository
 
     return nil
   end
-
+  # confirm_booking method changes the default false value of confirmed in the table to true.
   def confirm_booking(booking) 
     sql = 'UPDATE bookings SET confirmed = $1 WHERE id = $2;'
     booking.confirmed = true
@@ -66,5 +66,4 @@ class BookingRepository
     booking.listing_id = record['listing_id'].to_i
     booking.user_id = record['user_id'].to_i  
   end
-
 end
