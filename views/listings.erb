@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB</title>
+        <link rel="stylesheet" href="/style.css" >
+    </head>
+    <body>
+        <h1>This are the listings.</h1>
+
+        <% @listings.each do |listing| %>
+          <p><%= listing.name %></p>
+        <% end %>
+    </body>
+</html>
