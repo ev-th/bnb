@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
 require_relative 'lib/listing_repository'
+require_relative 'lib/booking_repository'
 require_relative 'lib/database_connection'
 
 DatabaseConnection.connect('bnb_database_test')
@@ -35,13 +36,13 @@ class Application < Sinatra::Base
 
   post '/listings/:id/booking' do
     repo = BookingRepository.new
-    new_booking = Booking.new
-    new_booking.date = params[:date]
-    new_booking.confirmed = params[:confirmed]
-    new_booking.listing_id = params[:listing_id]
-    new_booking.user_id = params[:user_id]
+    @new_booking = Booking.new
+    @new_booking.date = params[:date]
+    @new_booking.confirmed = false
+    @new_booking.listing_id = params[:listing_id]
+    @new_booking.user_id = params[:user_id]
 
-    repo.create(new_booking)
+    repo.create(@new_booking)
     return ('') 
   end
 
