@@ -35,4 +35,14 @@ describe Application do
       expect(response.body).to include('listing_2')
     end
   end
+
+  context 'GET /listings/new' do
+    it 'should return a form to add a new listing' do
+      response = get('/listings/new')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('Add a new listing')
+      expect(response.body).to include('<form method="POST" action="/listings/new">')
+    end
+  end
 end
