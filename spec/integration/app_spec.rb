@@ -133,11 +133,15 @@ describe Application do
       expect(listings.last.end_date).to eq('2023-07-16')
       expect(listings.last.user_id).to eq('2')
 
+      expect(response.status).to eq 200
+      expect(response.body).to include('Listing added successfully')
+
       response = get('/listings')
       expect(response.body).to include('listing_3')
+
     end
 
-    xit 'should return a failing message' do
+    it 'should return a failing message' do
       response = post(
         '/listings/new',
         name: 'listing_3',

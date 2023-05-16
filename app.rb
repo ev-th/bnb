@@ -49,10 +49,11 @@ class Application < Sinatra::Base
     if dates_checker(new_listing)
       status 400
       return "The end date must be after the start date. <button onclick='history.back();'>Try again.</button>"
-    else
-
-      repo.create(new_listing)
     end
+
+    repo.create(new_listing)
+    status 200
+    return 'Listing added successfully. <a href="/listings">Back to all listings</a>'
   end
 
   private
