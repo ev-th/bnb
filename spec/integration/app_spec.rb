@@ -29,4 +29,46 @@ describe Application do
       expect(response.body).to include('<input type="submit">')
     end
   end
+
+  context 'POST /signup' do
+    it 'should add the new user to the database' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      
+      repo = UserRepository.new
+      expect(repo.all).to include(
+        have_attributes(
+          email: 'evan@example.com',
+          password: 'pass'
+        )
+      )
+    end
+    
+    it 'returns a success page' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+
+      expect(response.status).to eq 200
+      expect(response.body).to include 'Success'
+    end
+
+
+    
+    xit 'reroutes to error page if email is empty' do
+      response = post(
+        '/signup',
+        email: '',
+        password: 'pass'
+      )
+
+      expect(response.body)
+
+    end
+  end
 end
