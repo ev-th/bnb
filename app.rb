@@ -39,6 +39,12 @@ class Application < Sinatra::Base
     new_listing = Listing.new
     
     new_listing.name = params[:name]
+    new_listing.price = params[:price]
+    new_listing.description = params[:description]
+    new_listing.start_date = params[:start_date]
+    new_listing.end_date = params[:end_date]
+    new_listing.user_id = params[:user_id]
+
     repo.create(new_listing)
   end
 
