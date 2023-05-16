@@ -31,4 +31,19 @@ class Application < Sinatra::Base
     new_listing.name = params[:name]
     repo.create(new_listing)
   end
+
+  post '/signup' do
+    user = User.new
+    user.email = params[:email]
+    user.password = params[:password]
+    
+    repo = UserRepository.new
+    repo.create(user)
+    if user.email.empty? || user.password.empty?
+      status 400
+      return erb(:signup_fail)
+    else
+      return erb(:signup_success)
+    end
+  end
 end

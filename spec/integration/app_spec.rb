@@ -23,6 +23,64 @@ describe Application do
       response = get('/')
 
       expect(response.status).to eq(200)
+      expect(response.body).to include('<form method="POST" action="/signup">')
+      expect(response.body).to include('<input type="text" name="email">')
+      expect(response.body).to include('<input type="text" name="password">')
+      expect(response.body).to include('<input type="submit">')
+    end
+  end
+
+  context 'POST /signup' do
+    it 'should add the new user to the database' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      
+      repo = UserRepository.new
+      expect(repo.all).to include(
+        have_attributes(
+          email: 'evan@example.com',
+          password: 'pass'
+        )
+      )
+    end
+    
+    it 'returns a success page' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+
+      expect(response.status).to eq 200
+      expect(response.body).to include 'Success'
+      # add a test to link back to listings page
+    end
+    
+    it 'reroutes to error page if email is empty' do
+      response = post(
+        '/signup',
+        email: '',
+        password: 'pass'
+      )
+
+      expect(response.status).to eq 400
+      expect(response.body).to include('Sign up fail')
+      expect(response.body).to include('<a href="/signup"> back to sign up </a>')
+    end
+
+    it 'reroutes to error page if password is empty' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: ''
+      )
+
+      expect(response.status).to eq 400
+      expect(response.body).to include('Sign up fail')
+      expect(response.body).to include('<a href="/signup"> back to sign up </a>')
     end
   end
 
