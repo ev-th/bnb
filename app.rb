@@ -17,6 +17,11 @@ class Application < Sinatra::Base
     
     repo = UserRepository.new
     repo.create(user)
-    return erb(:signup_success)
+    if user.email.empty? || user.password.empty?
+      status 400
+      return erb(:signup_fail)
+    else
+      return erb(:signup_success)
+    end
   end
 end

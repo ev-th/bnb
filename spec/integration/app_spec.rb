@@ -56,19 +56,31 @@ describe Application do
 
       expect(response.status).to eq 200
       expect(response.body).to include 'Success'
+      # add a test to link back to listings page
     end
-
-
     
-    xit 'reroutes to error page if email is empty' do
+    it 'reroutes to error page if email is empty' do
       response = post(
         '/signup',
         email: '',
         password: 'pass'
       )
 
-      expect(response.body)
+      expect(response.status).to eq 400
+      expect(response.body).to include('Sign up fail')
+      expect(response.body).to include('<a href="/signup"> back to sign up </a>')
+    end
 
+    it 'reroutes to error page if password is empty' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: ''
+      )
+
+      expect(response.status).to eq 400
+      expect(response.body).to include('Sign up fail')
+      expect(response.body).to include('<a href="/signup"> back to sign up </a>')
     end
   end
 end
