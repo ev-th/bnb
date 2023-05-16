@@ -136,5 +136,20 @@ describe Application do
       response = get('/listings')
       expect(response.body).to include('listing_3')
     end
+
+    xit 'should return a failing message' do
+      response = post(
+        '/listings/new',
+        name: 'listing_3',
+        price: '250',
+        description: 'mud hut',
+        start_date: '2023-07-16',
+        end_date: '2023-05-16',
+        user_id: '2'
+      )
+
+      expect(response.status).to eq 400
+      expect(response.body).to include('The end date must be after the start date')
+    end
   end
 end

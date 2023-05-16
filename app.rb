@@ -35,6 +35,7 @@ class Application < Sinatra::Base
   end
 
   post '/listings/new' do
+       
     repo = ListingRepository.new
     new_listing = Listing.new
     
@@ -44,8 +45,28 @@ class Application < Sinatra::Base
     new_listing.start_date = params[:start_date]
     new_listing.end_date = params[:end_date]
     new_listing.user_id = params[:user_id]
+    
+    if dates_checker(new_listing)
+      status 400
+      return "The end date must be after the start date. <button onclick='history.back();'>Try again.</button>"
+    else
 
-    repo.create(new_listing)
+      repo.create(new_listing)
+    end
+  end
+
+  private
+
+  def dates_checker(new_listing)
+    start_date_parts = new_listing.start_date.split('-')
+    start_date_to_check = Time.new(*start_date_parts)
+    
+    end_date_parts = new_listing.end_date.split('-')
+    end_date_to_check = Time.new(*end_date_parts)
+
+    if start_date_to_check > end_date_to_check
+      return true
+    end
   end
 
   post '/signup' do
