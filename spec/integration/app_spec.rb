@@ -83,4 +83,40 @@ describe Application do
       expect(response.body).to include('<a href="/signup"> back to sign up </a>')
     end
   end
+
+  context 'GET /listings' do
+    it 'should return the list of the listings' do
+      response = get('/listings')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('listing_1')
+      expect(response.body).to include('listing_2')
+    end
+  end
+
+  context 'GET /listings/new' do
+    it 'should return a form to add a new listing' do
+      response = get('/listings/new')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('Add a new listing')
+      expect(response.body).to include('<form method="POST" action="/listings/new">')
+    end
+  end
+
+  context 'POST /listings/new' do
+    it 'should add a new listing' do
+      response = post('/listings/new',
+          name: 'listing_3')
+          
+      repo = ListingRepository.new
+      
+      listings = repo.all
+      expect(listings.length).to eq(3)
+      expect(listings.last.name).to eq('listing_3')
+
+      response = get('/listings')
+      expect(response.body).to include('listing_3')
+    end
+  end
 end
