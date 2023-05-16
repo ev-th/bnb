@@ -68,4 +68,18 @@ describe ListingRepository do
     expect(listing[0].description).to include 'sunny place'
     expect(listing[1].description).to include 'cloudy place'
   end
+
+  it 'finds a listing by id' do
+    repo = ListingRepository.new
+    listing = repo.find(1)
+
+    expect(listing.id).to eq '1'
+    expect(listing.name).to eq 'listing_1'
+    expect(listing.price).to eq '1000'
+    expect(listing.description).to eq 'sunny place'
+    expect(listing.start_date).to eq '2023-04-08'
+    expect(listing.end_date).to eq '2023-05-09'
+    expect(listing.user_id).to eq '1'
+
+  end
 end

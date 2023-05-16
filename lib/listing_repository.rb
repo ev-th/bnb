@@ -51,4 +51,20 @@ class ListingRepository
     end
     return listings
   end
+
+  def find(id)
+    sql = "SELECT id, name, price, description, start_date, end_date, user_id FROM listings WHERE id = $1;"
+    sql_params = [id]
+    result_set = DatabaseConnection.exec_params(sql, sql_params)
+    listing = Listing.new
+    listing.id = result_set[0]['id']
+    listing.name = result_set[0]['name']
+    listing.price = result_set[0]['price']
+    listing.description = result_set[0]['description']
+    listing.start_date = result_set[0]['start_date']
+    listing.end_date = result_set[0]['end_date']
+    listing.user_id = result_set[0]['user_id']
+
+    return listing
+  end
 end
