@@ -5,10 +5,14 @@
         <link rel="stylesheet" href="/style.css" >
     </head>
     <body>
-        <h1>This are the listings.</h1>
+        <p> You are logged in as: <%= @current_id %> </p>
+        <h1>These are the listings.</h1>
 
         <% @listings.each do |listing| %>
           <p><%= listing.name %></p>
+          <p><%= listing.description %></p>
+          <p>£<%= listing.price %></p>
+          <p>Availability: <%= listing.start_date %> - <%= listing.end_date %></p>
         <% end %>
     </body>
 </html>

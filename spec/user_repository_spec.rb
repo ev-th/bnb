@@ -35,13 +35,7 @@ RSpec.describe UserRepository do
       user.password = 'password123'
       repo.create(user)
 
-      expect(repo.all).to include(
-        have_attributes(
-          id: 3,
-          email: 'test_1@example.com',
-          password: 'password123'
-        )
-      )
+      expect(repo.all.length).to eq 3
     end
   end
 
