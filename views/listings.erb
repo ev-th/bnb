@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="/style.css" >
     </head>
     <body>
+        <p> You are logged in as: <%= @current_id %> </p>
         <h1>These are the listings.</h1>
 
         <% @listings.each do |listing| %>

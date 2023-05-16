@@ -24,8 +24,13 @@ describe Application do
 
       expect(response.status).to eq(200)
       expect(response.body).to include('<form method="POST" action="/signup">')
-      expect(response.body).to include('<input type="text" name="email">')
-      expect(response.body).to include('<input type="text" name="password">')
+      expect(response.body).to include('<input type="email" name="email">')
+      expect(response.body).to include('<input type="password" name="password">')
+      expect(response.body).to include('<input type="submit">')
+
+      expect(response.body).to include('<form method="POST" action="/login">')
+      expect(response.body).to include('<input type="email" name="email">')
+      expect(response.body).to include('<input type="password" name="password">')
       expect(response.body).to include('<input type="submit">')
     end
   end
@@ -37,26 +42,29 @@ describe Application do
         email: 'evan@example.com',
         password: 'pass'
       )
-      
-      repo = UserRepository.new
-      expect(repo.all).to include(
-        have_attributes(
-          email: 'evan@example.com',
-          password: 'pass'
-        )
+
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
       )
+      
+      response = get('/listings')
+      expect(response.status).to eq 200
+      expect(response.body).to include 'These are the listings'
+      expect(response.body).to include 'You are logged in as: 3'
     end
     
-    it 'returns a success page' do
+    it 'redirects to listings page on success' do
       response = post(
         '/signup',
         email: 'evan@example.com',
         password: 'pass'
       )
 
+      response = get('/listings')
       expect(response.status).to eq 200
-      expect(response.body).to include 'Success'
-      # add a test to link back to listings page
+      expect(response.body).to include 'These are the listings'
     end
     
     it 'reroutes to error page if email is empty' do
@@ -81,6 +89,26 @@ describe Application do
       expect(response.status).to eq 400
       expect(response.body).to include('Sign up fail')
       expect(response.body).to include('<a href="/signup"> back to sign up </a>')
+    end
+  end
+
+  context 'POST /login' do
+    it 'logs in an exisiting user when correct details are submitted' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+
+      response = get('/listings')
+      expect(response.status).to eq 200
+      expect(response.body).to include 'These are the listings'
+      expect(response.body).to include 'You are logged in as: 3'
     end
   end
 
@@ -156,4 +184,5 @@ describe Application do
       expect(response.body).to include('The end date must be after the start date')
     end
   end
+
 end
