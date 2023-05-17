@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
+require 'sinatra/flash'
 require_relative 'lib/listing_repository'
 require_relative 'lib/booking_repository'
 require_relative 'lib/user_repository'
@@ -9,6 +10,7 @@ DatabaseConnection.connect('bnb_database_test')
 
 class Application < Sinatra::Base
   enable :sessions
+  register Sinatra::Flash
 
   configure :development do
     register Sinatra::Reloader
@@ -37,18 +39,28 @@ class Application < Sinatra::Base
 
     return erb(:listing)
   end
-  # adds an unconfirmed booking to the bookings table. ISSUE: Does not currently have a way to assign a user id.
-  # will need to revisit once we've implmented log in/log out and sessions.
+
   post '/listings/:id/booking' do
 
     repo = BookingRepository.new
+
+    existing_bookings = repo.find_by_listing(params[:id])
+    
+    existing_bookings.each do |booking|
+      if booking.date == params[:date] &&  booking.confirmed == true
+        flash[:error] = "That date is already booked. Please select another"
+        redirect "/listings/#{params[:id]}"
+      end
+    end
+
     @new_booking = Booking.new
     @new_booking.date = params[:date]
     @new_booking.confirmed = false
     @new_booking.listing_id = params[:id]
     @new_booking.user_id = session[:user_id]
-
+       
     repo.create(@new_booking)
+
     return ('') 
   end
 

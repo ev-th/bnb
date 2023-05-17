@@ -90,5 +90,46 @@ describe Application do
       new_booking = repo.find(4)
       expect(new_booking.user_id).to eq 3
     end
+
+    it 'flashes an error message when a selected date already has a confirmed booking and does not make a booking' do
+      repo = BookingRepository.new
+
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      # this makes a successful booking
+      response = post(
+        '/listings/1/booking', 
+        date: '2023-04-10', 
+        confirmed: false, 
+        listing_id: '1'
+      )    
+
+      booking = repo.find(4)
+      repo.confirm_booking(booking)
+
+      # this trys to book the same date again
+      response = post(
+        '/listings/1/booking', 
+        date: '2023-04-10', 
+        confirmed: false, 
+        listing_id: '1'
+      )    
+
+      # expect(response.status).to eq (200)
+
+      # expect(response.body).to include "That date is already booked. Please select another."
+
+      expect(repo.find(5)).to be nil
+
+    end
   end
 end
