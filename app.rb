@@ -27,6 +27,7 @@ class Application < Sinatra::Base
   end
 
   get '/listings/new' do
+    @current_id = session[:user_id]
     return erb(:new_listing)
   end
 
@@ -55,13 +56,14 @@ class Application < Sinatra::Base
        
     repo = ListingRepository.new
     new_listing = Listing.new
-    
+  
     new_listing.name = params[:name]
     new_listing.price = params[:price]
     new_listing.description = params[:description]
     new_listing.start_date = params[:start_date]
     new_listing.end_date = params[:end_date]
-    new_listing.user_id = params[:user_id]
+    new_listing.user_id = session[:user_id]
+   
     
     if dates_checker(new_listing)
       status 400
