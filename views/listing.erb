@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB</title>
-        <link rel="stylesheet" href="/style.css" >
-    </head>
-    <body>
-        <h1> <%= @listing.name %> </h1>
-        <form method="POST" action="/listings/<%= @listing.id %>/booking">
-          <input type="date" name="date" min="<%= @listing.start_date %>" max="<%= @listing.end_date %>">
-          <input type="submit", value="request to book">
-        </form>  
-    </body> 
-</html>
+<h1> <%= @listing.name %> </h1>
+<form method="POST" action="/listings/<%= @listing.id %>/booking">
+    <input type="date" name="date" min="<%= @listing.start_date %>" max="<%= @listing.end_date %>">
+    <input type="submit", value="request to book">
+</form>
