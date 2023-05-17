@@ -1,8 +1,11 @@
 <p> You are logged in as: <%= @current_id %> </p>
 <h1>These are the listings.</h1>
 
+<%# The larger grid holding all the listings %>
 <div class="listings-container">
+
   <% @listings.each do |listing| %>
+    <%# Each listings-option div contains the information for one listing %>
     <div class="listings-option">
       <img src="/listings_placeholder.png" alt="listing header image">
       <h3><%= listing.name %></h3>
@@ -14,4 +17,5 @@
         </a>
     </div>
   <% end %>
+  
 </div>
