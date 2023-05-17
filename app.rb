@@ -15,7 +15,7 @@ class Application < Sinatra::Base
   end
 
   get '/' do
-    return erb(:index)
+    return erb :index, layout: nil
   end
   
   get '/listings' do
