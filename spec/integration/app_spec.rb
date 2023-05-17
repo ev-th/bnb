@@ -33,6 +33,11 @@ describe Application do
       expect(response.body).to include('<input type="password" name="password">')
       expect(response.body).to include('<input type="submit">')
     end
+
+    it 'should not return a navbar' do
+      response = get('/')
+      expect(response.body).not_to include '<nav'
+    end
   end
 
   context 'POST /signup' do
@@ -125,6 +130,12 @@ describe Application do
       expect(response.body).to include('listing_2')
       expect(response.body).to include('city penthouse')
       expect(response.body).to include('£1500')
+    end
+
+    it 'returns a page with a navbar' do
+      response = get('/listings')
+
+      expect(response.body).to include '<nav>'
     end
   end
 

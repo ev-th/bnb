@@ -1,31 +1,22 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB</title>
-        <link rel="stylesheet" href="/style.css" >
-    </head>
-    <body>
-        <h1>Add a new listing</h1>
+<h1>Add a new listing</h1>
 
-        <form method="POST" action="/listings/new">
-            <label for="name">Name:</label>
-            <input type="text" name="name" />
+<form method="POST" action="/listings/new">
+    <label for="name">Name:</label>
+    <input type="text" name="name" />
 
-            <label for="price">Price:</label>
-            <input type="number" name="price" />
+    <label for="price">Price:</label>
+    <input type="number" name="price" />
 
-            <label for="description">Description:</label>
-            <input type="text" name="description" />
+    <label for="description">Description:</label>
+    <input type="text" name="description" />
 
-            <label for="start_date">Available From:</label>
-            <input type="date" name="start_date" />
+    <label for="start_date">Available From:</label>
+    <input type="date" name="start_date" />
 
-            <label for="end_date">Available To:</label>
-            <input type="date" name="end_date" />
+    <label for="end_date">Available To:</label>
+    <input type="date" name="end_date" />
 
-            <input type="submit" value="Submit" />
+    <input type="submit" value="Submit" />
 
-            <p> You are logged in as: <%= @current_id %> </p>
-        </form>
-    </body>
-</html>
+    <p> You are logged in as: <%= @current_id %> </p>
+</form>
