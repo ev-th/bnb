@@ -126,6 +126,12 @@ describe Application do
       expect(response.body).to include('city penthouse')
       expect(response.body).to include('£1500')
     end
+
+    it 'returns a page with a navbar' do
+      response = get('/listings')
+
+      expect(response.body).to include '<nav>'
+    end
   end
 
   context 'GET /listings/new' do
