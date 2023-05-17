@@ -13,6 +13,9 @@
           <p><%= listing.description %></p>
           <p>£<%= listing.price %></p>
           <p>Availability: <%= listing.start_date %> - <%= listing.end_date %></p>
+            <a href="/listings/<%= listing.id %>">
+                <input type="submit" value="Book Here" />
+            </a>
         <% end %>
     </body>
 </html>

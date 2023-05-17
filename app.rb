@@ -22,7 +22,7 @@ class Application < Sinatra::Base
     repo = ListingRepository.new
     @listings = repo.all
     @current_id = session[:user_id]
-
+    
     return erb(:listings)
   end
 
