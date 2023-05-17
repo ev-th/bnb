@@ -2,16 +2,18 @@
 <html>
     <head>
         <title>MakersBnB</title>
-        <link rel="stylesheet" type="text/css" href="/style.css" >
+        <link rel="stylesheet" type="text/css" href="/styles.css" >
     </head>
     <body>
         <nav>
-            <%# <img id="logo" src="logo.png" alt="logo"> %>
-            <div class="nav-links">
-                <h1><a href="/listings" >All listings</a></h1>            
-            </div>
+            <img id="logo" src="logo.png" alt="logo">
+            <ul class="nav-links">
+                <li><a href="/listings" >All Listings</a></li>           
+                <li><a href="/" >Bookings</a></li>
+            </ul>
         </nav>
-
-        <%= yield %>
+        <main>
+            <%= yield %>
+        </main>
     </body>
 </html>

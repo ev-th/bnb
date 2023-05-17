@@ -33,6 +33,11 @@ describe Application do
       expect(response.body).to include('<input type="password" name="password">')
       expect(response.body).to include('<input type="submit">')
     end
+
+    it 'should not return a navbar' do
+      response = get('/')
+      expect(response.body).not_to include '<nav'
+    end
   end
 
   context 'POST /signup' do
