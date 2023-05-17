@@ -78,3 +78,28 @@ h1 {
     padding: 5px 5px 15px;
     background-color: white;
 }
+
+/* Sign up and log in page */
+
+.welcome-message {
+    text-align: center;
+}
+
+.homepage-boxes{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.homepage-box {
+    border: 5px solid brown;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: white;
+    text-align: center;
+
+}
+
+.homepage-box input {
+    margin: 5px;
+}
