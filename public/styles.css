@@ -4,6 +4,7 @@ body {
     margin: 0;
 }
 
+/* Nav Bar */
 nav {
     background-color: brown;
     color: whitesmoke;
@@ -38,4 +39,9 @@ nav a {
 
 main {
     margin: 5px;
+}
+
+.listings-container {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
 }

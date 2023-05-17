@@ -1,12 +1,15 @@
 <p> You are logged in as: <%= @current_id %> </p>
 <h1>These are the listings.</h1>
-
-<% @listings.each do |listing| %>
-  <p><%= listing.name %></p>
-  <p><%= listing.description %></p>
-  <p>£<%= listing.price %></p>
-  <p>Availability: <%= listing.start_date %> - <%= listing.end_date %></p>
-    <a href="/listings/<%= listing.id %>">
-        <input type="submit" value="Book Here" />
-    </a>
-<% end %>
+<div class="listings-container">
+  <% @listings.each do |listing| %>
+    <div class="listings-option">
+      <p><%= listing.name %></p>
+      <p><%= listing.description %></p>
+      <p>£<%= listing.price %></p>
+      <p>Availability: <%= listing.start_date %> - <%= listing.end_date %></p>
+        <a href="/listings/<%= listing.id %>">
+            <input type="submit" value="Book Here" />
+        </a>
+    </div>
+  <% end %>
+</div>

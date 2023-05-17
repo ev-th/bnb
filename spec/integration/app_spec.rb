@@ -173,7 +173,7 @@ describe Application do
       repo = ListingRepository.new
       
       listings = repo.all
-      expect(listings.length).to eq(3)
+      expect(listings.length).to eq(7)
       expect(listings.last.name).to eq('listing_3')
       expect(listings.last.price).to eq('250')
       expect(listings.last.description).to eq('mud hut')
