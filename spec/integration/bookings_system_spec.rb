@@ -3,7 +3,17 @@ require "rack/test"
 require_relative '../../app'
 require 'json'
 
+def reset_tables
+  seed_sql = File.read('spec/seeds.sql')
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'bnb_database_test' })
+  connection.exec(seed_sql)
+end
+
 describe Application do
+  before(:each) do 
+    reset_tables
+  end
+  
   # This is so we can use rack-test helper methods.
   include Rack::Test::Methods
 
@@ -36,9 +46,10 @@ describe Application do
       expect(response.body).to include ('<input type="submit", value="request to book">')
     end
   end
+
   context 'POST /listings/:id/booking' do
     it 'posts a selected date to bookings' do
-    response = post('/listings/1/booking', date: '2023-04-10', confirmed: false, listing_id: '1', user_id: '1')
+    response = post('/listings/1/booking', date: '2023-04-10', confirmed: false, listing_id: '1')
     expect(response.status).to eq(200)
     expect(response.body).to eq('')
 
@@ -49,7 +60,35 @@ describe Application do
     expect(new_booking.date).to eq '2023-04-10'
     expect(new_booking.confirmed).to eq false
     expect(new_booking.listing_id).to eq 1
-    expect(new_booking.user_id).to eq 1
+    end
+
+    it 'adds the user id of the current session to the booking request' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+
+      response = post(
+        '/listings/1/booking', 
+        date: '2023-04-10', 
+        confirmed: false, 
+        listing_id: '1'
+      )
+
+
+      expect(response.status).to eq(200)
+      expect(response.body).to eq('')
+
+      repo = BookingRepository.new
+      new_booking = repo.find(4)
+      expect(new_booking.user_id).to eq 3
     end
   end
 end
