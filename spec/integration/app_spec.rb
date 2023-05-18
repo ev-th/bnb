@@ -214,6 +214,14 @@ describe Application do
       response = get('/requests')
       expect(response.status).to eq 200
     end
+
+    it 'displays all user requests for that user\'s listings' do
+      post(
+        '/login',
+        email: 'julian@example.com',
+        password: 'test'
+      )
+    end
   end
 
 end
