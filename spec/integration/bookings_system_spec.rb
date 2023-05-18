@@ -10,39 +10,46 @@ def reset_tables
   connection.exec(seed_sql)
 end
 
-describe Application do
+describe BookingRepository do
   before(:each) do 
     reset_tables
   end
+
+  def login_for_test
+    post(
+      '/login',
+      email: 'julian@example.com',
+      password: 'test'
+    )
+  end
   
-  # This is so we can use rack-test helper methods.
   include Rack::Test::Methods
 
-  # We need to declare the `app` value by instantiating the Application
-  # class so our tests work.
   let(:app) { Application.new }
 
   describe 'GET /listings/:id' do
-    # Freezes Time.now before each test that it only responds with the date 2023-05-20 
-    before(:each) do
+     before(:each) do
       Timecop.freeze(Date.new(2023, 4, 07))
     end
     # tells Time class to return to normal after each test
     after(:each) do
       Timecop.return
     end
-
-    it "gets listing 1 and has a form to request booking" do
+    
+    it "gets listing details for specific listing and has a form to request booking" do
       response = get('/listings/1')
+      expect(response.status).to eq 302
+
+      login_for_test
+     
+      response = get('listings/1')
       expect(response.status).to eq(200)
       expect(response.body).to include ('listing_1')
       expect(response.body).to include ('<form method="POST" action="/listings/1/booking">')
       expect(response.body).to include ('<input type="date" name="date" min="2023-04-08" max="2023-05-09">')
       expect(response.body).to include ('<input type="submit", value="request to book">')
-    end
 
-    it "gets listing 2 and has a form to request booking" do
-      response = get('/listings/2')
+      response = get('listings/2')
       expect(response.status).to eq(200)
       expect(response.body).to include ('listing_2')
       expect(response.body).to include ('<form method="POST" action="/listings/2/booking">')
@@ -73,34 +80,26 @@ describe Application do
     end
   end
 
+
   describe 'POST /listings/:id/booking' do
-    it 'creates a new unconfirmed booking in the bookings table' do
-    response = post('/listings/1/booking', date: '2023-04-10', confirmed: false, listing_id: '1')
-    expect(response.status).to eq(200)
-    expect(response.body).to eq('')
+    it 'posts a selected date to bookings' do
+      login_for_test
+      response = post('/listings/1/booking', date: '2023-04-10', confirmed: false, listing_id: '1')
+      expect(response.status).to eq(200)
+      expect(response.body).to eq('')
 
-    repo = BookingRepository.new
-    new_booking = repo.find(4)
+      repo = BookingRepository.new
+      new_booking = repo.find(4)
 
-    expect(new_booking.id).to eq 4
-    expect(new_booking.date).to eq '2023-04-10'
-    expect(new_booking.confirmed).to eq false
-    expect(new_booking.listing_id).to eq 1
+      expect(new_booking.id).to eq 4
+      expect(new_booking.date).to eq '2023-04-10'
+      expect(new_booking.confirmed).to eq false
+      expect(new_booking.listing_id).to eq 1
     end
 
     it 'adds the user id of the current session to the booking request' do
-      response = post(
-        '/signup',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
-      
-      response = post(
-        '/login',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
-
+      login_for_test
+  
       response = post(
         '/listings/1/booking', 
         date: '2023-04-10', 
@@ -108,11 +107,11 @@ describe Application do
         listing_id: '1'
       )
 
-
       expect(response.status).to eq(200)
       expect(response.body).to eq('')
 
       repo = BookingRepository.new
+
       new_booking = repo.all.last
       expect(new_booking.user_id).to eq 3
     end
@@ -122,19 +121,8 @@ describe Application do
 
     it 'flashes an error message when a selected date already has a confirmed booking and does not make a booking' do
       repo = BookingRepository.new
-
-      response = post(
-        '/signup',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
-      
-      response = post(
-        '/login',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
-      # this makes a successful booking
+      login_for_test
+     
       response = post(
         '/listings/1/booking', 
         date: '2023-04-10', 
@@ -156,7 +144,6 @@ describe Application do
       expect(response.status).to eq (302)
 
       expect(repo.all.length).to be 4
-
     end
   end
 end
