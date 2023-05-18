@@ -24,6 +24,7 @@ class Application < Sinatra::Base
     if session[:user_id] == nil
       return redirect '/'
     else
+      @current_id = session[:user_id]
       repo = ListingRepository.new
       @listings = repo.all
       return erb(:listings)
@@ -34,6 +35,7 @@ class Application < Sinatra::Base
     if session[:user_id] == nil
       return redirect '/'
     else
+      @current_id = session[:user_id]
       return erb(:new_listing)
     end
   end
@@ -106,6 +108,7 @@ class Application < Sinatra::Base
     if session[:user_id] == nil
       return redirect '/'
     else
+      @current_id = session[:user_id]
       booking_repo = BookingRepository.new
       @user_repo = UserRepository.new
       @listing_repo = ListingRepository.new
