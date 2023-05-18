@@ -131,7 +131,7 @@
           null
         ]
       },
-      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/spec/date_formatter_spec.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/spec/listing_spec.rb": {
         "lines": [
           1,
           null,
@@ -140,10 +140,33 @@
           1,
           1,
           1,
+          1,
+          1,
+          1,
           null,
           null,
           1,
           1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/lib/listing.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
           1,
           1,
           null,
@@ -154,16 +177,13 @@
         "lines": [
           1,
           1,
-          null,
-          2,
-          2,
-          2,
-          null,
+          0,
+          0,
           null,
           null
         ]
       }
     },
-    "timestamp": 1684447378
+    "timestamp": 1684449518
   }
 }

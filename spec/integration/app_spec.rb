@@ -316,7 +316,7 @@ describe Application do
         password: 'test'
       )
       response = get('/requests')
-      expect(response.body).to include '2023-04-09'
+      expect(response.body).to include '9 April 2023'
     end
 
     it 'returns a page with a navbar' do
