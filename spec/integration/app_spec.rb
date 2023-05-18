@@ -137,25 +137,35 @@ describe Application do
       response = get('/listings')
 
       expect(response.body).to include '<nav'
+      expect(response.body).to include 'julian@example.com'
     end
   end
-
+  
   context 'GET /listings/new' do
     it 'should return a form to add a new listing' do
       response = get('/listings/new')
-        
+      
       expect(response.status).to eq 302
-
+      
       login_for_test
-    
+      
       response = get('/listings/new')
-
+      
       expect(response.status).to eq(200)
       expect(response.body).to include('Add A New Listing')
       expect(response.body).to include('<form method="POST" action="/listings/new"')
     end
-  end
 
+    it 'returns a page with a navbar' do
+      login_for_test
+     
+      response = get('/listings/new')
+  
+      expect(response.body).to include '<nav'
+      expect(response.body).to include 'julian@example.com'
+    end
+  end
+  
   context 'POST /listings/new' do
     it 'should add a new listing' do
       login_for_test
@@ -307,6 +317,15 @@ describe Application do
       )
       response = get('/requests')
       expect(response.body).to include '2023-04-09'
+    end
+
+    it 'returns a page with a navbar' do
+      login_for_test
+     
+      response = get('/requests')
+  
+      expect(response.body).to include '<nav'
+      expect(response.body).to include 'julian@example.com'
     end
   end
 

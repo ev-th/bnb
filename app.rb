@@ -203,10 +203,11 @@ class Application < Sinatra::Base
     if sign_in_status == true
       
       session[:user_id] = user.id
-      @current_id = session[:user_id]
+
+      @user = repo.find(user.id)
       return erb(:listings)
     else
-      return erb(:signup_fail)
+      return erb :signup_fail, layout: nil
     end
   end
   
