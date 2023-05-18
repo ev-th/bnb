@@ -17,23 +17,24 @@ nav {
     height: 70px;
 }
 
+.nav-left * {
+    float: left;
+    margin: auto;
+}
+
 nav img {
     height: 60px;
     display: inline;
-    margin-top: 5px;
-    margin-left: 5px;
-}
-
-nav #logged{
-    display: inline-block;
-    font-size: 20px;
-    padding-bottom: 40px
+    padding-left: 5px;
+    padding-top: 5px;
 }
 
 nav h5 {
     display: inline-block;
     font-size: 20px;
-    padding-bottom: 40px
+    padding-bottom: 40px;
+    padding-left: 30px;
+    padding-top: 22px;
 }
 
 nav ul {
@@ -46,7 +47,7 @@ nav li {
     display: inline;
     float: right;
     font-size: 25px;
-    padding: 16px;
+    padding: 18px;
     color: whitesmoke;
     font-weight: bold;
 }
