@@ -23,7 +23,7 @@ describe ListingRepository do
     expect(listings[0].description).to eq 'sunny place'
 
     expect(listings[1].start_date).to eq '2024-05-03'
-    expect(listings[1].end_date).to eq '2024-06-23'
+    expect(listings[1].end_date).to eq '3000-06-23'
     expect(listings[1].user_id).to eq '2'
 
   end
@@ -35,7 +35,7 @@ describe ListingRepository do
     new_listing.price = '1750'
     new_listing.description = 'cloudy place'
     new_listing.start_date = '2024-05-15'
-    new_listing.end_date = '2024-07-23'
+    new_listing.end_date = '3000-07-23'
     new_listing.user_id = '1'
     repo.create(new_listing)
     
@@ -78,7 +78,7 @@ describe ListingRepository do
     expect(listing.price).to eq '1000'
     expect(listing.description).to eq 'sunny place'
     expect(listing.start_date).to eq '2023-04-08'
-    expect(listing.end_date).to eq '2023-05-09'
+    expect(listing.end_date).to eq '3000-05-09'
     expect(listing.user_id).to eq '1'
 
   end

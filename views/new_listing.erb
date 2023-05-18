@@ -17,10 +17,10 @@
     <input type="text" name="description" />
 
     <label for="start_date">Available From:</label>
-    <input type="date" name="start_date" />
+    <input type="date" name="start_date" min="<%= Date.today%>"/>
 
     <label for="end_date">Available To:</label>
-    <input type="date" name="end_date" />
+    <input type="date" name="end_date" min="<%= Date.today%>" />
 
     <input type="submit" value="Submit" />
 
