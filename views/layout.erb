@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="icon" type="image/x-icon" href="favicon.png">
         <title>MakersBnB</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,14 +11,15 @@
 
     <body>
         <nav>
-            <img id="logo" src="logo.png" alt="logo">
+            <img id="logo" src="/logo.png" alt="logo">
             <h5 id='logged'>You are logged in as: <%= @current_id %></h5>
             <ul class="nav-links">
                 <li><form method='POST' action='/logout'>
                     <button type="submit" class="nav_button">Logout</button>
                 </form></li>
+                <li><a href="/listings/new" >New Listing</a></li>           
                 <li><a href="/listings" >All Listings</a></li>           
-                <li><a href="/" >Bookings</a></li>
+                <li><a href="/requests" >Requests</a></li>
             </ul>
         </nav>
         <main>
