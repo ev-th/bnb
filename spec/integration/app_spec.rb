@@ -68,7 +68,7 @@ describe Application do
 
       expect(response.status).to eq 400
       expect(response.body).to include('Sign up fail')
-      expect(response.body).to include('<a href="/signup"> back to sign up </a>')
+      expect(response.body).to include('<a href="/"> back to sign up </a>')
     end
 
     it 'reroutes to error page if password is empty' do
@@ -81,7 +81,7 @@ describe Application do
 
       expect(response.status).to eq 400
       expect(response.body).to include('Sign up fail')
-      expect(response.body).to include('<a href="/signup"> back to sign up </a>')
+      expect(response.body).to include('<a href="/"> back to sign up </a>')
     end
   end
 
