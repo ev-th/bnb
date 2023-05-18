@@ -5,16 +5,18 @@
 
   <% @listings.each do |listing| %>
     <%# Each listings-option div contains the information for one listing %>
-    <div class="listings-option">
-      <img src="/listings_placeholder.png" alt="listing header image">
-      <h3><%= listing.name %></h3>
-      <p><%= listing.description %></p>
-      <p>£<%= listing.price %> per night</p>
-      <p>Availability: <%= listing.start_date %> - <%= listing.end_date %></p>
-        <a href="/listings/<%= listing.id %>">
-            <input type="submit" value="Book Here" />
-        </a>
-    </div>
+    <% if listing.end_date >= Date.today.to_s %>
+      <div class="listings-option">
+        <img src="/listings_placeholder.png" alt="listing header image">
+        <h3><%= listing.name %></h3>
+        <p><%= listing.description %></p>
+        <p>£<%= listing.price %> per night</p>
+        <p>Availability: <%= listing.start_date %> - <%= listing.end_date %></p>
+          <a href="/listings/<%= listing.id %>">
+              <input type="submit" value="Book Here" />
+          </a>
+      </div>
+    <% end %>
   <% end %>
   
 </div>
