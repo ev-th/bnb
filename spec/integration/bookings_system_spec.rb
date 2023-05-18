@@ -124,11 +124,9 @@ describe Application do
         listing_id: '1'
       )    
 
-      # expect(response.status).to eq (200)
+      expect(response.status).to eq (302)
 
-      # expect(response.body).to include "That date is already booked. Please select another."
-
-      expect(repo.find(5)).to be nil
+      expect(repo.all.length).to be 4
 
     end
   end
