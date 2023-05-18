@@ -82,7 +82,7 @@ class Application < Sinatra::Base
   end
 
   post '/listings/new' do
-       
+
     repo = ListingRepository.new
     new_listing = Listing.new
   
