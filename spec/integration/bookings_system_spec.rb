@@ -90,7 +90,8 @@ describe Application do
       new_booking = repo.find(4)
       expect(new_booking.user_id).to eq 3
     end
-
+    # this test does not test that the flash error works yet. We couldn't figure out how to test it.
+    # It does work on localhost though.
     it 'flashes an error message when a selected date already has a confirmed booking and does not make a booking' do
       repo = BookingRepository.new
 

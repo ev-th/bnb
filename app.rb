@@ -43,7 +43,7 @@ class Application < Sinatra::Base
   post '/listings/:id/booking' do
 
     repo = BookingRepository.new
-
+    # checks the existing bookings and if a confirmed booking is found on the same date, it fails to book and flashes a message.
     existing_bookings = repo.find_by_listing(params[:id])
     
     existing_bookings.each do |booking|
