@@ -41,21 +41,19 @@ describe Application do
       expect(response.body).to include ('<input type="submit", value="request to book">')
     end
 
-      # The user can't select a past date when booking a listing and 
-      # user cant set a past date when making a listing.
-    context 'given a listing with an availability date ' do
-      
+    context 'given a listing with an availability date before the current day' do
+      # Freezes Time.now so that it only responds with the date 2023-05-20 
       before(:each) do
         Timecop.freeze(Date.new(2023, 5, 20))
       end
-
+      # tells Time class to return to normal after the test
       after(:each) do
         Timecop.return
       end
 
       it 'sets the starting availability date to the current day if the start date is in the past' do
         listing_repository = ListingRepository.new
-
+        # creates a new listing that is before the frozen day
         listing = Listing.new
         listing.name = 'new listing'
         listing.price = '200'
@@ -69,11 +67,8 @@ describe Application do
         response = get("/listings/#{latest_listing_id }")
 
         expect(response.status).to eq(200)
-
+        # checks that the starting day has been set to the current day
         expect(response.body).to include ('min="2023-05-20"')
-
-        # create a new listing whose date is in the past
-        # check that GET /listing/:id of that page has a min= that is the today rather than past day
       end
     end
   end

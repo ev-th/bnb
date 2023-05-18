@@ -36,16 +36,10 @@ class Application < Sinatra::Base
   get '/listings/:id' do
     repo = ListingRepository.new
     @listing = repo.find(params[:id])
-
     listing_start_date = @listing.start_date
-    today = Time.now.to_date.to_s
 
-    if listing_start_date < today
-      @first_available_day = today
-    else
-      @first_available_day = listing_start_date
-    end
-    
+    @first_available_day = compare_today_to(listing_start_date)
+
     return erb(:listing)
   end
 
@@ -153,5 +147,12 @@ class Application < Sinatra::Base
   post '/logout' do
     session.clear
     redirect '/'
+  end
+
+  private
+
+  def compare_today_to(listing_start_date)
+    today = Time.now.to_date.to_s
+    listing_start_date < today ? today : listing_start_date
   end
 end
