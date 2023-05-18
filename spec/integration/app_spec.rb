@@ -152,7 +152,7 @@ describe Application do
 
       expect(response.status).to eq(200)
       expect(response.body).to include('Add a new listing')
-      expect(response.body).to include('<form method="POST" action="/listings/new">')
+      expect(response.body).to include('<form method="POST" action="/listings/new"')
     end
   end
 
