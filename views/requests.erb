@@ -1,5 +1,5 @@
 <% @bookings.each do |booking|%>
-    <%= @listing_repo.find(booking.listing_id).name%><br>
+    <%= @listing_repo.find(booking.listing_id).name%>
     <%= booking.date%> <br>
     <%= @user_repo.find(booking.user_id).email%><br>
     <form action="/requests/confirm/<%= booking.id %>" method="POST">

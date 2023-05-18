@@ -222,7 +222,7 @@ describe Application do
       expect(response.status).to eq 200
     end
 
-    it 'displays all user requests for that user\'s listings' do
+    it 'displays confirm button' do
       post(
         '/login',
         email: 'julian@example.com',
@@ -232,8 +232,8 @@ describe Application do
       expect(response.status).to eq 200
       expect(response.body).to include("confirm")
     end
-    
-    it 'should include the users email adrress' do
+
+    it 'should include the booker\'s email adrress' do
       post(
         '/login',
         email: 'julian@example.com',
@@ -242,6 +242,36 @@ describe Application do
       response = get('/requests')
       expect(response.status).to eq 200
       expect(response.body).to include 'andrea@example.com'
+    end
+    
+    it 'displays the listing name' do
+      post(
+        '/login',
+        email: 'julian@example.com',
+        password: 'test'
+      )
+      response = get('/requests')
+      expect(response.body).to include 'listing_1'
+    end
+    
+    it 'displays a different listing name when logged in to another account' do
+      post(
+        '/login',
+        email: 'andrea@example.com',
+        password: 'test'
+      )
+      response = get('/requests')
+      expect(response.body).to include 'listing_2'
+    end
+    
+    it 'displays the date of the listing' do
+      post(
+        '/login',
+        email: 'julian@example.com',
+        password: 'test'
+      )
+      response = get('/requests')
+      expect(response.body).to include '2023-04-09'
     end
   end
 end
