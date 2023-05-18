@@ -205,8 +205,15 @@ describe Application do
     end
   end
 
-  context 'POST /listings/:id/book' do
+  context 'POST /requests/confirm' do
+    it 'post a TRUE value to the database' do
+      response = post('/requests/confirm/1')
+      expect(response.status).to eq 200
 
+      repo = BookingRepository.new 
+      booking = repo.find(1)
+      expect(booking.confirmed).to eq true
+    end
   end
 
   context 'GET /requests' do

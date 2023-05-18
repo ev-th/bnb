@@ -92,6 +92,15 @@ class Application < Sinatra::Base
       erb(:requests)
   end
 
+  post '/requests/confirm/:id' do
+    repo = BookingRepository.new
+    booking = repo.find(params[:id])
+
+    repo.confirm_booking(booking)
+      return ("Booking Confirmed!") #Could have a flash pop-up here
+  end
+
+
   private
 
   def dates_checker(new_listing)
