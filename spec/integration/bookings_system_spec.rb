@@ -1,5 +1,6 @@
 require "spec_helper"
 require "rack/test"
+require 'timecop'
 require_relative '../../app'
 require 'json'
 
@@ -21,12 +22,6 @@ describe Application do
   # class so our tests work.
   let(:app) { Application.new }
 
-  # Write your integration tests below.
-  # If you want to split your integration tests
-  # accross multiple RSpec files (for example, have
-  # one test suite for each set of related features),
-  # you can duplicate this test file to create a new one.
-
   describe 'GET /listings/:id' do
     it "gets listing 1 and has a form to request booking" do
       response = get('/listings/1')
@@ -44,6 +39,42 @@ describe Application do
       expect(response.body).to include ('<form method="POST" action="/listings/2/booking">')
       expect(response.body).to include ('<input type="date" name="date" min="2024-05-03" max="2024-06-23">')
       expect(response.body).to include ('<input type="submit", value="request to book">')
+    end
+
+      # The user can't select a past date when booking a listing and 
+      # user cant set a past date when making a listing.
+    context 'given a listing with an availability date ' do
+      
+      before(:each) do
+        Timecop.freeze(Date.new(2023, 5, 20))
+      end
+
+      after(:each) do
+        Timecop.return
+      end
+
+      it 'sets the starting availability date to the current day if the start date is in the past' do
+        listing_repository = ListingRepository.new
+
+        listing = Listing.new
+        listing.name = 'new listing'
+        listing.price = '200'
+        listing.description = 'a listing with a start date that is before today_fake'
+        listing.start_date = '2023-05-19'
+        listing.end_date = '2023-05-30'
+        listing.user_id = '1'
+
+        listing_repository.create(listing)
+        latest_listing_id = listing_repository.all.last.id
+        response = get("/listings/#{latest_listing_id }")
+
+        expect(response.status).to eq(200)
+
+        expect(response.body).to include ('min="2023-05-20"')
+
+        # create a new listing whose date is in the past
+        # check that GET /listing/:id of that page has a min= that is the today rather than past day
+      end
     end
   end
 
@@ -87,7 +118,7 @@ describe Application do
       expect(response.body).to eq('')
 
       repo = BookingRepository.new
-      new_booking = repo.find(4)
+      new_booking = repo.all.last
       expect(new_booking.user_id).to eq 3
     end
 
@@ -116,7 +147,7 @@ describe Application do
         listing_id: '1'
       )    
 
-      booking = repo.find(4)
+      booking = repo.all.last
       repo.confirm_booking(booking)
 
       # this trys to book the same date again
@@ -132,10 +163,5 @@ describe Application do
       expect(repo.all.length).to be 4
 
     end
-
   end
 end
-
-
-# The user can't select a past date when booking a listing and 
-# user cant set a past date when making a listing.

@@ -41,6 +41,7 @@ GEM
     sinatra-flash (0.3.0)
       sinatra (>= 1.0.0)
     tilt (2.0.10)
+    timecop (0.9.6)
     webrick (1.7.0)
 
 PLATFORMS
@@ -57,6 +58,7 @@ DEPENDENCIES
   sinatra (~> 2.2)
   sinatra-contrib (~> 2.2)
   sinatra-flash (~> 0.3.0)
+  timecop (~> 0.9.6)
   webrick (~> 1.7)
 
 BUNDLED WITH
