@@ -205,4 +205,15 @@ describe Application do
     end
   end
 
+  context 'POST /listings/:id/book' do
+
+  end
+
+  context 'GET /requests' do
+    it 'returns 200 OK' do
+      response = get('/requests')
+      expect(response.status).to eq 200
+    end
+  end
+
 end

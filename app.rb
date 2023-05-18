@@ -75,6 +75,10 @@ class Application < Sinatra::Base
     return 'Listing added successfully. <a href="/listings">Back to all listings</a>'
   end
 
+  get '/requests' do
+    erb(:requests)
+  end
+
   private
 
   def dates_checker(new_listing)
