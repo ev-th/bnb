@@ -1,1 +1,8 @@
-"confirm"
+<% @bookings.each do |booking|%>
+    <%= @listing_repo.find(booking.listing_id).name%><br>
+    <%= booking.date%> <br>
+    <%= @user_repo.find(booking.user_id).email%><br>
+    <form action="/listings/<%= booking.id %>/book" method="POST">
+        <input type="submit" value="confirm booking">
+    </form> 
+<% end %>

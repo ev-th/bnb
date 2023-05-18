@@ -225,6 +225,7 @@ describe Application do
       expect(response.status).to eq 200
       expect(response.body).to include("confirm")
     end
+    
     it 'should include the users email adrress' do
       post(
         '/login',
