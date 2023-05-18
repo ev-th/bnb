@@ -1,9 +1,14 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
 body {
     font-size: 16px;
     padding: 0;
     margin: 0;
 }
 
+/* Nav Bar */
 nav {
     background-color: brown;
     color: whitesmoke;
@@ -13,12 +18,19 @@ nav {
 nav img {
     height: 60px;
     display: inline;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+nav h5 {
+    display: inline-block;
+    font-size: 20px;
+    padding-bottom: 40px
 }
 
 nav ul {
     list-style-type: none;
     margin: 0;
-    padding: 0;
     display: inline;
 }
 
@@ -28,6 +40,7 @@ nav li {
     font-size: 25px;
     padding: 16px;
     color: whitesmoke;
+    font-weight: bold;
 }
 
 nav a {
@@ -37,5 +50,56 @@ nav a {
 }
 
 main {
+    padding: 2em;
+    background-color: whitesmoke;
+}
+
+h1 {
+    font-size: 50px;
+    margin-bottom: 50px;
+}
+
+/* Grid container with all listings */
+.listings-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 2em;
+    text-align: center;
+}
+
+.listings-container img {
+    width: 100%;
+}
+
+/* The box with information about one listing within the grid */
+.listings-option {
+    border: 5px solid brown;
+    border-radius: 10px;
+    padding: 5px 5px 15px;
+    background-color: white;
+}
+
+/* Sign up and log in page */
+
+.welcome-message {
+    text-align: center;
+}
+
+.homepage-boxes{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.homepage-box {
+    border: 5px solid brown;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: white;
+    text-align: center;
+
+}
+
+.homepage-box input {
     margin: 5px;
 }
