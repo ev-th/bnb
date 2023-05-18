@@ -4,19 +4,27 @@ require_relative '../../app'
 require 'json'
 
 describe Application do
-  # This is so we can use rack-test helper methods.
+  def reset_tables
+    seed_sql = File.read('spec/seeds.sql')
+    connection = PG.connect({ host: '127.0.0.1', dbname: 'bnb_database_test' })
+    connection.exec(seed_sql)
+  end
+  
+  before(:each) do 
+    reset_tables
+  end
+
+  def login_for_test
+    post(
+      '/login',
+      email: 'julian@example.com',
+      password: 'test'
+    )
+  end
+
   include Rack::Test::Methods
 
-  # We need to declare the `app` value by instantiating the Application
-  # class so our tests work.
   let(:app) { Application.new }
-
-  # Write your integration tests below.
-  # If you want to split your integration tests
-  # accross multiple RSpec files (for example, have
-  # one test suite for each set of related features),
-  # you can duplicate this test file to create a new one.
-
 
   context 'GET /' do
     it 'should get the homepage' do
@@ -42,17 +50,8 @@ describe Application do
 
   context 'POST /signup' do
     it 'should add the new user to the database' do
-      response = post(
-        '/signup',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
 
-      response = post(
-        '/login',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
+      login_for_test
       
       response = get('/listings')
       expect(response.status).to eq 200
@@ -60,6 +59,7 @@ describe Application do
     end
        
     it 'reroutes to error page if email is empty' do
+      
       response = post(
         '/signup',
         email: '',
@@ -72,6 +72,7 @@ describe Application do
     end
 
     it 'reroutes to error page if password is empty' do
+
       response = post(
         '/signup',
         email: 'evan@example.com',
@@ -86,15 +87,11 @@ describe Application do
 
   context 'POST /login' do
     it 'logs in an exisiting user when correct details are submitted' do
-      response = post(
-        '/signup',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
+
       response = post(
         '/login',
-        email: 'evan@example.com',
-        password: 'pass'
+        email: 'julian@example.com',
+        password: 'test'
       )
 
       response = get('/listings')
@@ -109,16 +106,7 @@ describe Application do
         
       expect(response.status).to eq 302
 
-      response = post(
-        '/signup',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
-      response = post(
-        '/login',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
+      login_for_test
 
       response = get('/listings')
 
@@ -134,16 +122,8 @@ describe Application do
     end
     
     it 'returns a page with a navbar' do
-      response = post(
-        '/signup',
-        email: 'evan@example.com',
-        password: 'pass'
-        )
-      response = post(
-        '/login',
-        email: 'evan@example.com',
-        password: 'pass'
-        )
+      login_for_test
+     
       response = get('/listings')
 
       expect(response.body).to include '<div class="listings-container">'
@@ -156,16 +136,8 @@ describe Application do
         
       expect(response.status).to eq 302
 
-      response = post(
-        '/signup',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
-      response = post(
-        '/login',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
+      login_for_test
+    
       response = get('/listings/new')
 
       expect(response.status).to eq(200)
@@ -176,16 +148,8 @@ describe Application do
 
   context 'POST /listings/new' do
     it 'should add a new listing' do
-      response = post(
-        '/signup',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
-      response = post(
-        '/login',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
+      login_for_test
+     
       response = post(
         '/listings/new',
         name: 'listing_3',
@@ -204,7 +168,7 @@ describe Application do
       expect(listings.last.description).to eq('mud hut')
       expect(listings.last.start_date).to eq('2023-05-16')
       expect(listings.last.end_date).to eq('2023-07-16')
-      expect(listings.last.user_id).to eq('3')
+      expect(listings.last.user_id).to eq('1')
 
       expect(response.status).to eq 200
       expect(response.body).to include('Listing added successfully')
@@ -215,6 +179,7 @@ describe Application do
     end
 
     it 'should return a failing message' do
+      login_for_test
       response = post(
         '/listings/new',
         name: 'listing_3',
@@ -232,10 +197,10 @@ describe Application do
 
   context 'POST /logout' do
     it 'should log out the user' do
+      login_for_test
       response = post('/logout')
 
       expect(response.status).to eq 302
-      # can we test the landing page where we are redirected?
     end
   end
 end

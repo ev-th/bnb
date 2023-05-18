@@ -21,15 +21,14 @@ class Application < Sinatra::Base
   end
   
   get '/listings' do
-    repo = ListingRepository.new
-    @listings = repo.all
     if session[:user_id] == nil
       return redirect '/'
     else
+      repo = ListingRepository.new
+      @listings = repo.all
       return erb(:listings)
     end
   end
-   
 
   get '/listings/new' do
     if session[:user_id] == nil
@@ -40,26 +39,30 @@ class Application < Sinatra::Base
   end
 
   get '/listings/:id' do
-    repo = ListingRepository.new
-
-    @listing = repo.find(params[:id])
     if session[:user_id] == nil
       return redirect '/'
     else
+      repo = ListingRepository.new
+  
+      @listing = repo.find(params[:id])
       return erb(:listing)
     end
   end
 
   post '/listings/:id/booking' do
+    if session[:user_id] == nil
+      return redirect '/'
+    else
 
-    repo = BookingRepository.new
-    # checks the existing bookings and if a confirmed booking is found on the same date, it fails to book and flashes a message.
-    existing_bookings = repo.find_by_listing(params[:id])
-    
-    existing_bookings.each do |booking|
-      if booking.date == params[:date] &&  booking.confirmed == true
-        flash[:error] = "That date is already booked. Please select another"
-        redirect "/listings/#{params[:id]}"
+      repo = BookingRepository.new
+      # checks the existing bookings and if a confirmed booking is found on the same date, it fails to book and flashes a message.
+      existing_bookings = repo.find_by_listing(params[:id])
+      
+      existing_bookings.each do |booking|
+        if booking.date == params[:date] &&  booking.confirmed == true
+          flash[:error] = "That date is already booked. Please select another"
+          redirect "/listings/#{params[:id]}"
+        end
       end
     end
 
