@@ -262,6 +262,8 @@ describe Application do
       )
       response = get('/requests')
       expect(response.body).to include '2023-04-09'
+    end
+  end
 
   context 'POST /logout' do
     it 'should log out the user' do
