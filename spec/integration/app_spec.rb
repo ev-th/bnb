@@ -205,4 +205,12 @@ describe Application do
     end
   end
 
+  context 'POST /logout' do
+    it 'should log out the user' do
+      response = post('/logout')
+
+      expect(response.status).to eq 302
+      # can we test the landing page where we are redirected?
+    end
+  end
 end

@@ -129,4 +129,9 @@ class Application < Sinatra::Base
       return erb(:signup_fail)
     end
   end
+
+  post '/logout' do
+    session.clear
+    redirect '/'
+  end
 end
