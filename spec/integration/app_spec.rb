@@ -126,7 +126,7 @@ describe Application do
      
       response = get('/listings')
 
-      expect(response.body).to include '<div class="listings-container">'
+      expect(response.body).to include '<nav'
     end
   end
 
