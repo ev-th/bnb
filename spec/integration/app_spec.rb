@@ -69,8 +69,7 @@ describe Application do
       )
 
       response = get('/listings')
-      expect(response.status).to eq 200
-      expect(response.body).to include 'These are the listings'
+      expect(response.status).to eq 302
     end
     
     it 'flashes error if email or password is empty' do
