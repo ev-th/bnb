@@ -23,6 +23,15 @@ describe Application do
   let(:app) { Application.new }
 
   describe 'GET /listings/:id' do
+    # Freezes Time.now before each test that it only responds with the date 2023-05-20 
+    before(:each) do
+      Timecop.freeze(Date.new(2023, 4, 07))
+    end
+    # tells Time class to return to normal after each test
+    after(:each) do
+      Timecop.return
+    end
+
     it "gets listing 1 and has a form to request booking" do
       response = get('/listings/1')
       expect(response.status).to eq(200)
@@ -42,15 +51,6 @@ describe Application do
     end
 
     context 'given a listing with an availability date before the current day' do
-      # Freezes Time.now so that it only responds with the date 2023-05-20 
-      before(:each) do
-        Timecop.freeze(Date.new(2023, 5, 20))
-      end
-      # tells Time class to return to normal after the test
-      after(:each) do
-        Timecop.return
-      end
-
       it 'sets the starting availability date to the current day if the start date is in the past' do
         listing_repository = ListingRepository.new
         # creates a new listing that is before the frozen day
@@ -58,7 +58,7 @@ describe Application do
         listing.name = 'new listing'
         listing.price = '200'
         listing.description = 'a listing with a start date that is before today_fake'
-        listing.start_date = '2023-05-19'
+        listing.start_date = '2023-04-01'
         listing.end_date = '2023-05-30'
         listing.user_id = '1'
 
@@ -68,7 +68,7 @@ describe Application do
 
         expect(response.status).to eq(200)
         # checks that the starting day has been set to the current day
-        expect(response.body).to include ('min="2023-05-20"')
+        expect(response.body).to include ('min="2023-04-07"')
       end
     end
   end
