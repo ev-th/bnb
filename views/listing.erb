@@ -5,7 +5,7 @@
           </div>
         <% end %>        
         <form method="POST" action="/listings/<%= @listing.id %>/booking">
-          <input type="date" name="date" min="<%= @listing.start_date %>" max="<%= @listing.end_date %>">
+          <input type="date" name="date" min="<%= @first_available_day %>" max="<%= @listing.end_date %>">
           <input type="submit", value="request to book">
         </form>  
    

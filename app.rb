@@ -45,6 +45,8 @@ class Application < Sinatra::Base
       repo = ListingRepository.new
   
       @listing = repo.find(params[:id])
+      listing_start_date = @listing.start_date
+      @first_available_day = compare_today_to(listing_start_date)
       return erb(:listing)
     end
   end
@@ -170,8 +172,12 @@ class Application < Sinatra::Base
     redirect '/'
   end
 
-
   private
+  
+  def compare_today_to(listing_start_date)
+    today = Time.now.to_date.to_s
+    listing_start_date < today ? today : listing_start_date
+  end
 
   def dates_checker(new_listing)
     start_date_parts = new_listing.start_date.split('-')
