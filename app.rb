@@ -57,7 +57,12 @@ class Application < Sinatra::Base
     if session[:user_id] == nil
       return redirect '/'
     else
+      if invalid_request_parameters(params[:date])
 
+        flash[:error] = "Please enter a valid date"
+        redirect "/listings/#{params[:id]}"
+      end
+      
       repo = BookingRepository.new
       # checks the existing bookings and if a confirmed booking is found on the same date, it fails to book and flashes a message.
       existing_bookings = repo.find_by_listing(params[:id])
@@ -82,6 +87,14 @@ class Application < Sinatra::Base
   end
 
   post '/listings/new' do
+    params_array = [params[:name], params[:price], params[:description]]
+    params_array.each do |param|
+      if invalid_new_listing_parameters(param)
+
+        flash[:error] = "Please fill all fields with valid inputs"
+        redirect "/listings/new"
+      end
+    end
 
     repo = ListingRepository.new
     new_listing = Listing.new
@@ -135,6 +148,7 @@ class Application < Sinatra::Base
   end
 
   post '/signup' do
+
     listing_repo = ListingRepository.new
     @listings = listing_repo.all
     
@@ -143,21 +157,34 @@ class Application < Sinatra::Base
     user.password = params[:password]
     
     repo = UserRepository.new
-    repo.create(user)
     if user.email.empty? || user.password.empty?
-      status 400
-      return erb(:signup_fail)
-    else
-      return erb(:index)
+      flash[:signup_error] = "Please enter valid email and password"
+      redirect "/"
+    elsif user.email.empty? && user.password.empty?
+      flash[:signup_error] = "Please enter valid email and password"
+      redirect "/"
     end
+    
+    repo.create(user)
+    erb(:index)
+
   end
   
   post '/login' do
+
     listing_repo = ListingRepository.new
     @listings = listing_repo.all
     
     email = params[:email]
     password = params[:password]
+    
+    if email.empty? || password.empty?
+      flash[:login_error] = "Please enter valid email and password"
+      redirect "/"
+    elsif email.empty? && password.empty?
+      flash[:login_error] = "Please enter valid email and password"
+      redirect "/"
+    end
     
     repo = UserRepository.new
     user = repo.find_by_email(email)
@@ -180,6 +207,34 @@ class Application < Sinatra::Base
   end
 
   private
+
+  def invalid_request_parameters(params)
+    # Are the params nil?
+    return true if params == nil
+  
+    # Are they empty strings?
+    return true if params == ""
+  
+    return true if params.include? '<script>'
+
+    return true if Date.parse(params) == false
+
+    return false
+  end
+
+  def invalid_new_listing_parameters(params)
+    # Are the params nil?
+    return true if params == nil
+  
+    # Are they empty strings?
+    return true if params == ""
+  
+    return true if params.include? '<script>'
+
+    return true if params.match /^\A\d{4}-\d{2}-\d{2}\z/
+
+    return false
+  end
   
   def compare_today_to(listing_start_date)
     today = Time.now.to_date.to_s
