@@ -27,7 +27,7 @@ describe Application do
   # one test suite for each set of related features),
   # you can duplicate this test file to create a new one.
 
-  context 'get/listings/:id' do
+  describe 'GET /listings/:id' do
     it "gets listing 1 and has a form to request booking" do
       response = get('/listings/1')
       expect(response.status).to eq(200)
@@ -47,8 +47,8 @@ describe Application do
     end
   end
 
-  context 'POST /listings/:id/booking' do
-    it 'posts a selected date to bookings' do
+  describe 'POST /listings/:id/booking' do
+    it 'creates a new unconfirmed booking in the bookings table' do
     response = post('/listings/1/booking', date: '2023-04-10', confirmed: false, listing_id: '1')
     expect(response.status).to eq(200)
     expect(response.body).to eq('')
@@ -90,8 +90,10 @@ describe Application do
       new_booking = repo.find(4)
       expect(new_booking.user_id).to eq 3
     end
+
     # this test does not test that the flash error works yet. We couldn't figure out how to test it.
     # It does work on localhost though.
+
     it 'flashes an error message when a selected date already has a confirmed booking and does not make a booking' do
       repo = BookingRepository.new
 
@@ -130,5 +132,10 @@ describe Application do
       expect(repo.all.length).to be 4
 
     end
+
   end
 end
+
+
+# The user can't select a past date when booking a listing and 
+# user cant set a past date when making a listing.
