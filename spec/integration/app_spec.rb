@@ -221,7 +221,19 @@ describe Application do
         email: 'julian@example.com',
         password: 'test'
       )
+      response = get('/requests')
+      expect(response.status).to eq 200
+      expect(response.body).to include("confirm")
+    end
+    it 'should include the users email adrress' do
+      post(
+        '/login',
+        email: 'julian@example.com',
+        password: 'test'
+      )
+      response = get('/requests')
+      expect(response.status).to eq 200
+      expect(response.body).to include 'andrea@example.com'
     end
   end
-
 end
