@@ -130,5 +130,33 @@ describe Application do
       expect(repo.all.length).to be 4
 
     end
+
+    it 'returns an error when no date is entered' do
+      repo = BookingRepository.new
+
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      # this makes a successful booking
+      response = post(
+        '/listings/1/booking', 
+        date: '', 
+        confirmed: false, 
+        listing_id: '1'
+      )    
+
+      expect(response.status).to eq (302)
+
+      expect(repo.all.length).to be 3
+
+    end
   end
 end

@@ -42,6 +42,11 @@ class Application < Sinatra::Base
   end
 
   post '/listings/:id/booking' do
+    if invalid_request_parameters(params[:date])
+
+      flash[:error] = "Please enter a valid date"
+      redirect "/listings/#{params[:id]}"
+    end
 
     repo = BookingRepository.new
     # checks the existing bookings and if a confirmed booking is found on the same date, it fails to book and flashes a message.
@@ -66,7 +71,7 @@ class Application < Sinatra::Base
   end
 
   post '/listings/new' do
-       
+
     repo = ListingRepository.new
     new_listing = Listing.new
   
@@ -145,5 +150,28 @@ class Application < Sinatra::Base
   post '/logout' do
     session.clear
     redirect '/'
+  end
+
+  private
+
+  def invalid_request_parameters(params)
+    # Are the params nil?
+    return true if params == nil
+  
+    # Are they empty strings?
+    return true if params == ""
+  
+    return true if params.include? '<script>'
+
+    return true if Date.parse(params) == false
+
+    # begin
+    #   Date.parse(params)
+    #   return false
+    # rescue ArgumentError
+    #   return true
+    # end
+  
+    return false
   end
 end
