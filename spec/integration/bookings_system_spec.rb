@@ -28,17 +28,29 @@ describe Application do
   # you can duplicate this test file to create a new one.
 
   context 'get/listings/:id' do
-    it "gets listing 1 and has a form to request booking" do
+    it "gets listing details for specific listing and has a form to request booking" do
       response = get('/listings/1')
+      expect(response.status).to eq 302
+
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      response = get('listings/1')
       expect(response.status).to eq(200)
       expect(response.body).to include ('listing_1')
       expect(response.body).to include ('<form method="POST" action="/listings/1/booking">')
       expect(response.body).to include ('<input type="date" name="date" min="2023-04-08" max="2023-05-09">')
       expect(response.body).to include ('<input type="submit", value="request to book">')
-    end
 
-    it "gets listing 2 and has a form to request booking" do
-      response = get('/listings/2')
+      response = get('listings/2')
       expect(response.status).to eq(200)
       expect(response.body).to include ('listing_2')
       expect(response.body).to include ('<form method="POST" action="/listings/2/booking">')

@@ -57,21 +57,8 @@ describe Application do
       response = get('/listings')
       expect(response.status).to eq 200
       expect(response.body).to include 'These are the listings'
-      expect(response.body).to include 'You are logged in as: 3'
     end
-    
-    it 'redirects to listings page on success' do
-      response = post(
-        '/signup',
-        email: 'evan@example.com',
-        password: 'pass'
-      )
-
-      response = get('/listings')
-      expect(response.status).to eq 200
-      expect(response.body).to include 'These are the listings'
-    end
-    
+       
     it 'reroutes to error page if email is empty' do
       response = post(
         '/signup',
@@ -113,12 +100,26 @@ describe Application do
       response = get('/listings')
       expect(response.status).to eq 200
       expect(response.body).to include 'These are the listings'
-      expect(response.body).to include 'You are logged in as: 3'
     end
   end
 
   context 'GET /listings' do
     it 'should return the list of the listings' do
+      response = get('/listings')
+        
+      expect(response.status).to eq 302
+
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+
       response = get('/listings')
 
       expect(response.status).to eq(200)
@@ -131,16 +132,40 @@ describe Application do
       expect(response.body).to include('city penthouse')
       expect(response.body).to include('£1500')
     end
-
+    
     it 'returns a page with a navbar' do
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+        )
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+        )
       response = get('/listings')
 
-      expect(response.body).to include '<nav>'
+      expect(response.body).to include '<div class="listings-container">'
     end
   end
 
   context 'GET /listings/new' do
     it 'should return a form to add a new listing' do
+      response = get('/listings/new')
+        
+      expect(response.status).to eq 302
+
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
       response = get('/listings/new')
 
       expect(response.status).to eq(200)

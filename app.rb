@@ -23,22 +23,31 @@ class Application < Sinatra::Base
   get '/listings' do
     repo = ListingRepository.new
     @listings = repo.all
-    @current_id = session[:user_id]
-    
-    return erb(:listings)
+    if session[:user_id] == nil
+      return redirect '/'
+    else
+      return erb(:listings)
+    end
   end
+   
 
   get '/listings/new' do
-    @current_id = session[:user_id]
-    return erb(:new_listing)
+    if session[:user_id] == nil
+      return redirect '/'
+    else
+      return erb(:new_listing)
+    end
   end
 
   get '/listings/:id' do
     repo = ListingRepository.new
 
     @listing = repo.find(params[:id])
-
-    return erb(:listing)
+    if session[:user_id] == nil
+      return redirect '/'
+    else
+      return erb(:listing)
+    end
   end
 
   post '/listings/:id/booking' do
@@ -88,20 +97,7 @@ class Application < Sinatra::Base
     return 'Listing added successfully. <a href="/listings">Back to all listings</a>'
   end
 
-  private
-
-  def dates_checker(new_listing)
-    start_date_parts = new_listing.start_date.split('-')
-    start_date_to_check = Time.new(*start_date_parts)
-    
-    end_date_parts = new_listing.end_date.split('-')
-    end_date_to_check = Time.new(*end_date_parts)
-
-    if start_date_to_check > end_date_to_check
-      return true
-    end
-  end
-
+  
   post '/signup' do
     listing_repo = ListingRepository.new
     @listings = listing_repo.all
@@ -119,21 +115,21 @@ class Application < Sinatra::Base
       return erb(:index)
     end
   end
-
+  
   post '/login' do
     listing_repo = ListingRepository.new
     @listings = listing_repo.all
-
+    
     email = params[:email]
     password = params[:password]
-
+    
     repo = UserRepository.new
     user = repo.find_by_email(email)
-  
+    
     sign_in_status = repo.password_correct?(user.password, password)
-
+    
     if sign_in_status == true
-
+      
       session[:user_id] = user.id
       @current_id = session[:user_id]
       return erb(:listings)
@@ -141,9 +137,24 @@ class Application < Sinatra::Base
       return erb(:signup_fail)
     end
   end
-
+  
   post '/logout' do
     session.clear
     redirect '/'
+  end
+
+
+  private
+
+  def dates_checker(new_listing)
+    start_date_parts = new_listing.start_date.split('-')
+    start_date_to_check = Time.new(*start_date_parts)
+    
+    end_date_parts = new_listing.end_date.split('-')
+    end_date_to_check = Time.new(*end_date_parts)
+
+    if start_date_to_check > end_date_to_check
+      return true
+    end
   end
 end
