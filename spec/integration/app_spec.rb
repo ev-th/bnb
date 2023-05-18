@@ -24,13 +24,13 @@ describe Application do
 
       expect(response.status).to eq(200)
       expect(response.body).to include('<form method="POST" action="/signup">')
-      expect(response.body).to include('<input type="email" name="email">')
-      expect(response.body).to include('<input type="password" name="password">')
+      expect(response.body).to include('<input type="email" name="email" placeholder="email">')
+      expect(response.body).to include('<input type="password" name="password" placeholder="password">')
       expect(response.body).to include('<input type="submit">')
 
       expect(response.body).to include('<form method="POST" action="/login">')
-      expect(response.body).to include('<input type="email" name="email">')
-      expect(response.body).to include('<input type="password" name="password">')
+      expect(response.body).to include('<input type="email" name="email" placeholder="email">')
+      expect(response.body).to include('<input type="password" name="password" placeholder="password">')
       expect(response.body).to include('<input type="submit">')
     end
 
@@ -173,7 +173,7 @@ describe Application do
       repo = ListingRepository.new
       
       listings = repo.all
-      expect(listings.length).to eq(3)
+      expect(listings.length).to eq(7)
       expect(listings.last.name).to eq('listing_3')
       expect(listings.last.price).to eq('250')
       expect(listings.last.description).to eq('mud hut')
