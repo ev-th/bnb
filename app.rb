@@ -103,20 +103,24 @@ class Application < Sinatra::Base
   end
 
   get '/requests' do
-    booking_repo = BookingRepository.new
-    @user_repo = UserRepository.new
-    @listing_repo = ListingRepository.new
-    
-    # we're creating a bookings array. This is storing a 
-    # booking based on the session id of the current user
+    if session[:user_id] == nil
+      return redirect '/'
+    else
+      booking_repo = BookingRepository.new
+      @user_repo = UserRepository.new
+      @listing_repo = ListingRepository.new
+      
+      # we're creating a bookings array. This is storing a 
+      # booking based on the session id of the current user
 
-    listings = @listing_repo.find_by_user_id(session[:user_id])
-    
-    @bookings = []
-    listings.each do |listing| 
-      @bookings += booking_repo.find_by_listing(listing.id)
+      listings = @listing_repo.find_by_user_id(session[:user_id])
+      
+      @bookings = []
+      listings.each do |listing| 
+        @bookings += booking_repo.find_by_listing(listing.id)
+      end
+        erb(:requests)
     end
-      erb(:requests)
   end
 
   post '/requests/confirm/:id' do
