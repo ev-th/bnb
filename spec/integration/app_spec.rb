@@ -58,7 +58,7 @@ describe Application do
       
       response = get('/listings')
       expect(response.status).to eq 200
-      expect(response.body).to include 'These are the listings'
+      expect(response.body).to include 'Available Listings'
     end
 
     it 'redirects to listings page on success' do
@@ -106,7 +106,7 @@ describe Application do
 
       response = get('/listings')
       expect(response.status).to eq 200
-      expect(response.body).to include 'These are the listings'
+      expect(response.body).to include 'Available Listings'
     end
   end
 
@@ -151,7 +151,7 @@ describe Application do
       response = get('/listings/new')
 
       expect(response.status).to eq(200)
-      expect(response.body).to include('Add a new listing')
+      expect(response.body).to include('Add A New Listing')
       expect(response.body).to include('<form method="POST" action="/listings/new"')
     end
   end
