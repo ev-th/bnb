@@ -13,7 +13,7 @@
         <nav>
             <div class="nav-left">
                 <img id="logo" src="/logo.png" alt="logo">
-                <h5 id='logged'>You are logged in as: <%= @current_id %></h5>
+                <h5 id='logged'>You are logged in as <%= @user.email %></h5>
             </div>
             <ul class="nav-links">
                 <li><form method='POST' action='/logout'>
