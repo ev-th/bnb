@@ -209,6 +209,10 @@ describe Application do
   context 'GET /requests' do
     it 'returns 200 OK' do
       response = get('/requests')
+      expect(response.status).to eq 302
+      login_for_test
+      
+      response = get('/requests')
       expect(response.status).to eq 200
     end
 
