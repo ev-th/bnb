@@ -6,6 +6,8 @@ body {
     font-size: 16px;
     padding: 0;
     margin: 0;
+    height: 100%;
+    background-color: whitesmoke;
 }
 
 /* Nav Bar */
@@ -127,4 +129,18 @@ h1 {
 
 .homepage-box input {
     margin: 5px;
+}
+
+/* Requests page */
+
+.request li {
+    list-style-type: none;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.request {
+    margin-bottom: 30px;
+    padding: 0;
 }

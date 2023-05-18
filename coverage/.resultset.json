@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/awdem/Projects/makersbnb-ruby-seed/lib/database_connection.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/lib/database_connection.rb": {
         "lines": [
           null,
           null,
@@ -131,7 +131,7 @@
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/spec/booking_repository_spec.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/spec/booking_repository_spec.rb": {
         "lines": [
           1,
           null,
@@ -232,7 +232,7 @@
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/lib/booking_repository.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/lib/booking_repository.rb": {
         "lines": [
           1,
           null,
@@ -320,14 +320,14 @@
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/lib/booking.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/lib/booking.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/spec/integration/app_spec.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/spec/integration/app_spec.rb": {
         "lines": [
           1,
           1,
@@ -653,7 +653,7 @@
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/app.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/app.rb": {
         "lines": [
           1,
           1,
@@ -912,7 +912,7 @@
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/lib/listing_repository.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/lib/listing_repository.rb": {
         "lines": [
           1,
           null,
@@ -986,14 +986,14 @@
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/lib/listing.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/lib/listing.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/lib/user_repository.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/lib/user_repository.rb": {
         "lines": [
           1,
           1,
@@ -1053,14 +1053,14 @@
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/lib/user.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/lib/user.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/spec/integration/bookings_system_spec.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/spec/integration/bookings_system_spec.rb": {
         "lines": [
           1,
           1,
@@ -1243,7 +1243,7 @@
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/spec/listing_repository_spec.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/spec/listing_repository_spec.rb": {
         "lines": [
           1,
           null,
@@ -1332,7 +1332,7 @@
           null
         ]
       },
-      "/Users/awdem/Projects/makersbnb-ruby-seed/spec/user_repository_spec.rb": {
+      "/Users/evanthomas/projects/makers/week_5/makersbnb-ruby-seed/spec/user_repository_spec.rb": {
         "lines": [
           1,
           null,
@@ -1399,6 +1399,6 @@
         ]
       }
     },
-    "timestamp": 1684426077
+    "timestamp": 1684438311
   }
 }
