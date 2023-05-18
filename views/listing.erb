@@ -1,5 +1,11 @@
-<h1> <%= @listing.name %> </h1>
-<form method="POST" action="/listings/<%= @listing.id %>/booking">
-    <input type="date" name="date" min="<%= @listing.start_date %>" max="<%= @listing.end_date %>">
-    <input type="submit", value="request to book">
-</form>
+        <h1> <%= @listing.name %> </h1>
+        <% if flash[:error] %>
+          <div class="alert alert-danger" role="alert">
+            <%= flash[:error] %>  
+          </div>
+        <% end %>        
+        <form method="POST" action="/listings/<%= @listing.id %>/booking">
+          <input type="date" name="date" min="<%= @listing.start_date %>" max="<%= @listing.end_date %>">
+          <input type="submit", value="request to book">
+        </form>  
+   

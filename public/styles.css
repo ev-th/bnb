@@ -22,6 +22,12 @@ nav img {
     margin-left: 5px;
 }
 
+nav #logged{
+    display: inline-block;
+    font-size: 20px;
+    padding-bottom: 40px
+}
+
 nav h5 {
     display: inline-block;
     font-size: 20px;
@@ -48,6 +54,25 @@ nav a {
     color: whitesmoke;
     text-decoration: none;
 }
+
+nav a:hover {
+    color: black
+}
+
+.nav_button {
+    display: inline;
+    float: right;
+    font-size: 25px;
+    padding: 0px;
+    color: whitesmoke;
+    font-weight: bold;
+    background: none;
+    border: none;
+  }
+
+  .nav_button:hover {
+    color: black;
+  } 
 
 main {
     padding: 2em;
