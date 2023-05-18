@@ -15,3 +15,5 @@ gem "rspec"
 gem "rainbow", "~> 3.1"
 
 gem "bcrypt", "~> 3.1"
+
+gem "sinatra-flash", "~> 0.3.0"

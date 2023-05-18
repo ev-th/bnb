@@ -24,6 +24,22 @@ RSpec.describe BookingRepository do
     end
   end
 
+  context 'gets all bookings' do
+    it 'returns all the bookings' do
+      repo = BookingRepository.new
+
+      bookings = repo.all
+
+      expect(bookings.length).to eq 3
+      
+      first_booking = bookings.first
+      expect(first_booking.date).to eq '2023-04-09'
+      expect(first_booking.confirmed).to eq false
+      expect(first_booking.listing_id).to eq 1
+      expect(first_booking.user_id).to eq 2
+    end
+  end
+
   context '#find_by_listing' do
     it "returns all the bookings associated with a given listing's id" do
       repo = BookingRepository.new

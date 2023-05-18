@@ -2,6 +2,20 @@ require_relative 'booking'
 
 class BookingRepository
   
+  def all
+    sql = 'SELECT id, date, confirmed, listing_id, user_id FROM bookings;'
+    record_set = DatabaseConnection.exec_params(sql, [])
+
+    bookings = []
+
+    record_set.each do |record|
+      booking = Booking.new
+      set_attributes(booking, record)
+      bookings << booking
+     end
+    return bookings
+  end
+
   def find(booking_id)
     sql = 'SELECT id, date, confirmed, listing_id, user_id FROM bookings WHERE id = $1;'
     sql_params = [booking_id]
