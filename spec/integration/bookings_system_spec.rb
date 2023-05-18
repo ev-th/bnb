@@ -147,9 +147,9 @@ describe Application do
       )
       # this makes a successful booking
       response = post(
-        '/listings/1/booking', 
-        date: '', 
-        confirmed: false, 
+        '/listings/1/booking',
+        date: '',
+        confirmed: false,
         listing_id: '1'
       )    
 

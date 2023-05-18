@@ -14,6 +14,11 @@
                 <input type="email" name="email" placeholder="email"><br>
                 <input type="password" name="password" placeholder="password"><br>
                 <input type="submit">
+                <% if flash[:signup_error] %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= flash[:signup_error] %>  
+                    </div>
+                <% end %>
                 </form>
             </div>
 
@@ -23,6 +28,11 @@
                 <input type="email" name="email" placeholder="email"><br>
                 <input type="password" name="password" placeholder="password"><br>
                 <input type="submit">
+                <% if flash[:login_error] %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= flash[:login_error] %>  
+                    </div>
+                <% end %>
                 </form>
             </div>
         </div>

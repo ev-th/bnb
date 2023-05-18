@@ -3,7 +3,16 @@ require "rack/test"
 require_relative '../../app'
 require 'json'
 
+def reset_tables
+  seed_sql = File.read('spec/seeds.sql')
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'bnb_database_test' })
+  connection.exec(seed_sql)
+end
+
 describe Application do
+  before(:each) do 
+    reset_tables
+  end
   # This is so we can use rack-test helper methods.
   include Rack::Test::Methods
 
@@ -72,28 +81,25 @@ describe Application do
       expect(response.body).to include 'These are the listings'
     end
     
-    it 'reroutes to error page if email is empty' do
+    it 'flashes error if email is empty' do
+      repo = UserRepository.new
       response = post(
         '/signup',
         email: '',
         password: 'pass'
       )
 
-      expect(response.status).to eq 400
-      expect(response.body).to include('Sign up fail')
-      expect(response.body).to include('<a href="/signup"> back to sign up </a>')
-    end
+      expect(response.status).to eq 302
+      expect(repo.all.length).to eq 2
 
-    it 'reroutes to error page if password is empty' do
       response = post(
         '/signup',
         email: 'evan@example.com',
         password: ''
       )
 
-      expect(response.status).to eq 400
-      expect(response.body).to include('Sign up fail')
-      expect(response.body).to include('<a href="/signup"> back to sign up </a>')
+      expect(repo.all.length).to eq 2
+      expect(response.status).to eq 302
     end
   end
 
@@ -189,7 +195,7 @@ describe Application do
 
     end
 
-    it 'should return a failing message' do
+    it 'should return a failing message when end date is before start date' do
       response = post(
         '/listings/new',
         name: 'listing_3',
@@ -202,6 +208,37 @@ describe Application do
 
       expect(response.status).to eq 400
       expect(response.body).to include('The end date must be after the start date')
+    end
+
+    it 'returns a flash error when name, price, description are invalid' do
+      repo = ListingRepository.new
+
+      response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      # this doesn't make a successful booking
+      response = post(
+        '/listings/new',
+        name: '',
+        price: '',
+        description: '',
+        start_date: '2023-06-06',
+        end_date: '2023-07-07',
+        user_id: '3'
+      )    
+
+      expect(response.status).to eq (302)
+
+      expect(repo.all.length).to eq 6
+
     end
   end
 
