@@ -195,12 +195,81 @@ describe Application do
     end
   end
 
+  context 'POST /requests/confirm' do
+    it 'post a TRUE value to the database' do
+      response = post('/requests/confirm/1')
+      expect(response.status).to eq 200
+
+      repo = BookingRepository.new 
+      booking = repo.find(1)
+      expect(booking.confirmed).to eq true
+    end
+  end
+
+  context 'GET /requests' do
+    it 'returns 200 OK' do
+      response = get('/requests')
+      expect(response.status).to eq 200
+    end
+
+    it 'displays confirm button' do
+      post(
+        '/login',
+        email: 'julian@example.com',
+        password: 'test'
+      )
+      response = get('/requests')
+      expect(response.status).to eq 200
+      expect(response.body).to include("confirm")
+    end
+
+    it 'should include the booker\'s email adrress' do
+      post(
+        '/login',
+        email: 'julian@example.com',
+        password: 'test'
+      )
+      response = get('/requests')
+      expect(response.status).to eq 200
+      expect(response.body).to include 'andrea@example.com'
+    end
+    
+    it 'displays the listing name' do
+      post(
+        '/login',
+        email: 'julian@example.com',
+        password: 'test'
+      )
+      response = get('/requests')
+      expect(response.body).to include 'listing_1'
+    end
+    
+    it 'displays a different listing name when logged in to another account' do
+      post(
+        '/login',
+        email: 'andrea@example.com',
+        password: 'test'
+      )
+      response = get('/requests')
+      expect(response.body).to include 'listing_2'
+    end
+    
+    it 'displays the date of the listing' do
+      post(
+        '/login',
+        email: 'julian@example.com',
+        password: 'test'
+      )
+      response = get('/requests')
+      expect(response.body).to include '2023-04-09'
+
   context 'POST /logout' do
     it 'should log out the user' do
       login_for_test
       response = post('/logout')
 
       expect(response.status).to eq 302
+
     end
   end
 end
