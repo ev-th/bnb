@@ -16,7 +16,7 @@ describe ListingRepository do
 
     listings = repo.all
 
-    expect(listings.length).to eq 2
+    expect(listings.length).to eq 6
 
     expect(listings[0].id).to eq '1'
     expect(listings[0].name).to eq 'listing_1'
@@ -41,7 +41,7 @@ describe ListingRepository do
     
     listings = repo.all
     
-    expect(listings.length).to eq 3
+    expect(listings.length).to eq 7
     expect(listings.last.name).to eq 'listing_3'
     expect(listings.last.description).to eq 'cloudy place'
     expect(listings.last.price).to eq '1750'
@@ -57,16 +57,16 @@ describe ListingRepository do
     new_listing.end_date = '2024-07-23'
     new_listing.user_id = '1'
     repo.create(new_listing)
-    expect(repo.all.length).to eq 3
+    expect(repo.all.length).to eq 7
 
     listing = repo.find_by_user_id(1)
 
-    expect(listing.length).to eq 2
-    expect(listing[1].id).to eq '3'
+    expect(listing.length).to eq 3
+    expect(listing[2].id).to eq '7'
     expect(listing[0].id).to eq '1'
     expect(listing[0].name).to include 'listing_1'
     expect(listing[0].description).to include 'sunny place'
-    expect(listing[1].description).to include 'cloudy place'
+    expect(listing[2].description).to include 'cloudy place'
   end
 
   it 'finds a listing by id' do

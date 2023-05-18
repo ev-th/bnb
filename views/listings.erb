@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB</title>
-        <link rel="stylesheet" href="/style.css" >
-    </head>
-    <body>
-        <p> You are logged in as: <%= @current_id %> </p>
-        <h1>These are the listings.</h1>
+<p> You are logged in as: <%= @current_id %> </p>
+<h1>These are the listings.</h1>
 
-        <% @listings.each do |listing| %>
-          <p><%= listing.name %></p>
-          <p><%= listing.description %></p>
-          <p>£<%= listing.price %></p>
-          <p>Availability: <%= listing.start_date %> - <%= listing.end_date %></p>
-        <% end %>
-    </body>
-</html>
+<%# The larger grid holding all the listings %>
+<div class="listings-container">
+
+  <% @listings.each do |listing| %>
+    <%# Each listings-option div contains the information for one listing %>
+    <div class="listings-option">
+      <img src="/listings_placeholder.png" alt="listing header image">
+      <h3><%= listing.name %></h3>
+      <p><%= listing.description %></p>
+      <p>£<%= listing.price %> per night</p>
+      <p>Availability: <%= listing.start_date %> - <%= listing.end_date %></p>
+        <a href="/listings/<%= listing.id %>">
+            <input type="submit" value="Book Here" />
+        </a>
+    </div>
+  <% end %>
+  
+</div>

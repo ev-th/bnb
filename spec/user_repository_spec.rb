@@ -23,7 +23,8 @@ RSpec.describe UserRepository do
 
       expect(users.first.id).to eq(1)
       expect(users.first.email).to eq('julian@example.com')
-      expect(users.first.password).to eq('asdasd')
+      # expect(users.first.password).to eq('asdasd')
+      expect(BCrypt::Password.new(users.first.password)).to eq('test')
     end
   end
 
@@ -46,7 +47,7 @@ RSpec.describe UserRepository do
 
       expect(user.id).to eq(1)
       expect(user.email).to eq('julian@example.com')
-      expect(user.password).to eq('asdasd')
+      expect(BCrypt::Password.new(user.password)).to eq('test')
     end
 
     it 'finds the user information with id 2' do
@@ -55,7 +56,7 @@ RSpec.describe UserRepository do
 
       expect(user.id).to eq(2)
       expect(user.email).to eq('andrea@example.com')
-      expect(user.password).to eq('dsadsa')
+      expect(BCrypt::Password.new(user.password)).to eq('test')
     end
   end
 end

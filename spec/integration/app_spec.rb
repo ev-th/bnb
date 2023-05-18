@@ -24,14 +24,19 @@ describe Application do
 
       expect(response.status).to eq(200)
       expect(response.body).to include('<form method="POST" action="/signup">')
-      expect(response.body).to include('<input type="email" name="email">')
-      expect(response.body).to include('<input type="password" name="password">')
+      expect(response.body).to include('<input type="email" name="email" placeholder="email">')
+      expect(response.body).to include('<input type="password" name="password" placeholder="password">')
       expect(response.body).to include('<input type="submit">')
 
       expect(response.body).to include('<form method="POST" action="/login">')
-      expect(response.body).to include('<input type="email" name="email">')
-      expect(response.body).to include('<input type="password" name="password">')
+      expect(response.body).to include('<input type="email" name="email" placeholder="email">')
+      expect(response.body).to include('<input type="password" name="password" placeholder="password">')
       expect(response.body).to include('<input type="submit">')
+    end
+
+    it 'should not return a navbar' do
+      response = get('/')
+      expect(response.body).not_to include '<nav'
     end
   end
 
@@ -126,6 +131,12 @@ describe Application do
       expect(response.body).to include('city penthouse')
       expect(response.body).to include('£1500')
     end
+
+    it 'returns a page with a navbar' do
+      response = get('/listings')
+
+      expect(response.body).to include '<nav>'
+    end
   end
 
   context 'GET /listings/new' do
@@ -141,25 +152,34 @@ describe Application do
   context 'POST /listings/new' do
     it 'should add a new listing' do
       response = post(
+        '/signup',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      response = post(
+        '/login',
+        email: 'evan@example.com',
+        password: 'pass'
+      )
+      response = post(
         '/listings/new',
         name: 'listing_3',
         price: '250',
         description: 'mud hut',
         start_date: '2023-05-16',
         end_date: '2023-07-16',
-        user_id: '2'
       )
           
       repo = ListingRepository.new
       
       listings = repo.all
-      expect(listings.length).to eq(3)
+      expect(listings.length).to eq(7)
       expect(listings.last.name).to eq('listing_3')
       expect(listings.last.price).to eq('250')
       expect(listings.last.description).to eq('mud hut')
       expect(listings.last.start_date).to eq('2023-05-16')
       expect(listings.last.end_date).to eq('2023-07-16')
-      expect(listings.last.user_id).to eq('2')
+      expect(listings.last.user_id).to eq('3')
 
       expect(response.status).to eq 200
       expect(response.body).to include('Listing added successfully')
@@ -185,4 +205,12 @@ describe Application do
     end
   end
 
+  context 'POST /logout' do
+    it 'should log out the user' do
+      response = post('/logout')
+
+      expect(response.status).to eq 302
+      # can we test the landing page where we are redirected?
+    end
+  end
 end
