@@ -59,6 +59,8 @@ describe BookingRepository do
 
     context 'given a listing with an availability date before the current day' do
       it 'sets the starting availability date to the current day if the start date is in the past' do
+
+        login_for_test
         listing_repository = ListingRepository.new
         # creates a new listing that is before the frozen day
         listing = Listing.new
@@ -113,7 +115,7 @@ describe BookingRepository do
       repo = BookingRepository.new
 
       new_booking = repo.all.last
-      expect(new_booking.user_id).to eq 3
+      expect(new_booking.user_id).to eq 1
     end
 
     # this test does not test that the flash error works yet. We couldn't figure out how to test it.
