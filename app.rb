@@ -122,7 +122,8 @@ class Application < Sinatra::Base
 
     repo.create(new_listing)
     status 200
-    return 'Listing added successfully. <a href="/listings">Back to all listings</a>'
+    flash[:listing_success] = 'Listing successfully created!'
+    return redirect '/listings'
   end
 
   get '/requests' do
