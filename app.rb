@@ -116,7 +116,8 @@ class Application < Sinatra::Base
     
     if dates_checker(new_listing)
       status 400
-      return "The end date must be after the start date. <button onclick='history.back();'>Try again.</button>"
+      flash[:date_error] = 'The end date must be after the start date.'
+      return redirect '/listings/new'
     end
 
     repo.create(new_listing)

@@ -6,6 +6,12 @@
     </div>
 <% end %>  
 
+<% if flash[:date_error] %>
+    <div class="alert alert-danger" role="alert">
+        <%= flash[:date_error] %>  
+    </div>
+<% end %>  
+
 <form method="POST" action="/listings/new" class="new-listing">
     <input type="text" cols="50" name="name" placeholder="Name"/>
 
