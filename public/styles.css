@@ -165,15 +165,6 @@ textarea {
     margin-bottom: 10px;
 }
 
-.content-wrap {
-    padding-bottom: 2.5rem;
-  }
-
-.page-container {
-    position: relative;
-    min-height: 100vh;
-  }
-
 .footer {
     position: fixed;
     left: 0;
