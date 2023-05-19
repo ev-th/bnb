@@ -163,3 +163,41 @@ textarea {
     display: block;
     margin-bottom: 10px;
 }
+
+.content-wrap {
+    padding-bottom: 2.5rem;
+  }
+
+.page-container {
+    position: relative;
+    min-height: 100vh;
+  }
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: darkred;
+    color: white;
+    text-align: center;
+    height: 70px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+  }
+
+  .footer p{
+    line-height: 170%;
+  }
+
+  .footer a{
+    color: white;
+  }
+
+  .footer a:hover{
+    color: black;
+  }
+
+
+
