@@ -1,4 +1,4 @@
-<h1>These are the listings.</h1>
+<h1>Available Listings</h1>
 
 <%# The larger grid holding all the listings %>
 <div class="listings-container">
@@ -11,7 +11,7 @@
         <h3><%= listing.name %></h3>
         <p><%= listing.description %></p>
         <p>£<%= listing.price %> per night</p>
-        <p>Availability: <%= listing.start_date %> - <%= listing.end_date %></p>
+        <p>Availability: <%= listing.formatted_start_date %> - <%= listing.formatted_end_date %></p>
           <a href="/listings/<%= listing.id %>">
               <input type="submit" value="Book Here" />
           </a>

@@ -24,7 +24,9 @@ class Application < Sinatra::Base
     if session[:user_id] == nil
       return redirect '/'
     else
-      @current_id = session[:user_id]
+      user_repo = UserRepository.new
+      @user = user_repo.find(session[:user_id])
+
       repo = ListingRepository.new
       @listings = repo.all
       return erb(:listings)
@@ -35,7 +37,8 @@ class Application < Sinatra::Base
     if session[:user_id] == nil
       return redirect '/'
     else
-      @current_id = session[:user_id]
+      user_repo = UserRepository.new
+      @user = user_repo.find(session[:user_id])
       return erb(:new_listing)
     end
   end
@@ -44,6 +47,10 @@ class Application < Sinatra::Base
     if session[:user_id] == nil
       return redirect '/'
     else
+
+      user_repo = UserRepository.new
+      @user = user_repo.find(session[:user_id])
+
       repo = ListingRepository.new
   
       @listing = repo.find(params[:id])
@@ -121,7 +128,9 @@ class Application < Sinatra::Base
     if session[:user_id] == nil
       return redirect '/'
     else
-      @current_id = session[:user_id]
+      user_repo = UserRepository.new
+      @user = user_repo.find(session[:user_id])
+      
       booking_repo = BookingRepository.new
       @user_repo = UserRepository.new
       @listing_repo = ListingRepository.new
@@ -194,10 +203,11 @@ class Application < Sinatra::Base
     if sign_in_status == true
       
       session[:user_id] = user.id
-      @current_id = session[:user_id]
+
+      @user = repo.find(user.id)
       return erb(:listings)
     else
-      return erb(:signup_fail)
+      return erb :signup_fail, layout: nil
     end
   end
   

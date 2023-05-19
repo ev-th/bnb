@@ -58,7 +58,7 @@ describe Application do
       
       response = get('/listings')
       expect(response.status).to eq 200
-      expect(response.body).to include 'These are the listings'
+      expect(response.body).to include 'Available Listings'
     end
 
     it 'redirects to listings page on success' do
@@ -106,7 +106,7 @@ describe Application do
 
       response = get('/listings')
       expect(response.status).to eq 200
-      expect(response.body).to include 'These are the listings'
+      expect(response.body).to include 'Available Listings'
     end
   end
 
@@ -137,25 +137,35 @@ describe Application do
       response = get('/listings')
 
       expect(response.body).to include '<nav'
+      expect(response.body).to include 'julian@example.com'
     end
   end
-
+  
   context 'GET /listings/new' do
     it 'should return a form to add a new listing' do
       response = get('/listings/new')
-        
+      
       expect(response.status).to eq 302
-
+      
       login_for_test
-    
+      
       response = get('/listings/new')
-
+      
       expect(response.status).to eq(200)
-      expect(response.body).to include('Add a new listing')
-      expect(response.body).to include('<form method="POST" action="/listings/new">')
+      expect(response.body).to include('Add A New Listing')
+      expect(response.body).to include('<form method="POST" action="/listings/new"')
+    end
+
+    it 'returns a page with a navbar' do
+      login_for_test
+     
+      response = get('/listings/new')
+  
+      expect(response.body).to include '<nav'
+      expect(response.body).to include 'julian@example.com'
     end
   end
-
+  
   context 'POST /listings/new' do
     it 'should add a new listing' do
       login_for_test
@@ -306,7 +316,16 @@ describe Application do
         password: 'test'
       )
       response = get('/requests')
-      expect(response.body).to include '2023-04-09'
+      expect(response.body).to include '9 April 2023'
+    end
+
+    it 'returns a page with a navbar' do
+      login_for_test
+     
+      response = get('/requests')
+  
+      expect(response.body).to include '<nav'
+      expect(response.body).to include 'julian@example.com'
     end
   end
 

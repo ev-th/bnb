@@ -80,6 +80,15 @@ describe BookingRepository do
         expect(response.body).to include ('min="2023-04-07"')
       end
     end
+
+    it 'returns a page with a navbar' do
+      login_for_test
+     
+      response = get('/listings/1')
+  
+      expect(response.body).to include '<nav'
+      expect(response.body).to include 'julian@example.com'
+    end
   end
 
 

@@ -6,32 +6,35 @@ body {
     font-size: 16px;
     padding: 0;
     margin: 0;
+    height: 100%;
+    background-color: whitesmoke
 }
 
 /* Nav Bar */
 nav {
-    background-color: brown;
+    background-color: darkred;
     color: whitesmoke;
     height: 70px;
+}
+
+.nav-left * {
+    float: left;
+    margin: auto;
 }
 
 nav img {
     height: 60px;
     display: inline;
-    margin-top: 5px;
-    margin-left: 5px;
-}
-
-nav #logged{
-    display: inline-block;
-    font-size: 20px;
-    padding-bottom: 40px
+    padding-left: 5px;
+    padding-top: 5px;
 }
 
 nav h5 {
     display: inline-block;
     font-size: 20px;
-    padding-bottom: 40px
+    padding-bottom: 40px;
+    padding-left: 30px;
+    padding-top: 22px;
 }
 
 nav ul {
@@ -44,7 +47,7 @@ nav li {
     display: inline;
     float: right;
     font-size: 25px;
-    padding: 16px;
+    padding: 18px;
     color: whitesmoke;
     font-weight: bold;
 }
@@ -98,7 +101,7 @@ h1 {
 
 /* The box with information about one listing within the grid */
 .listings-option {
-    border: 5px solid brown;
+    border: 5px solid darkred;
     border-radius: 10px;
     padding: 5px 5px 15px;
     background-color: white;
@@ -117,7 +120,7 @@ h1 {
 }
 
 .homepage-box {
-    border: 5px solid brown;
+    border: 5px solid darkred;
     border-radius: 10px;
     padding: 30px;
     background-color: white;
@@ -127,4 +130,36 @@ h1 {
 
 .homepage-box input {
     margin: 5px;
+}
+
+/* Requests page */
+
+.request li {
+    list-style-type: none;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.request {
+    margin-bottom: 30px;
+    padding: 0;
+}
+
+/* New listing page */
+
+.new-listing input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.new-listing label {
+    display: inline;
+    margin-bottom: 10px;
+}
+
+textarea {
+    resize: none;
+    display: block;
+    margin-bottom: 10px;
 }
