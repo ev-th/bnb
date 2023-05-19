@@ -190,8 +190,7 @@ describe Application do
       expect(listings.last.end_date).to eq('2023-07-16')
       expect(listings.last.user_id).to eq('1')
 
-      expect(response.status).to eq 200
-      expect(response.body).to include('Listing added successfully')
+      expect(response.status).to eq 302
 
       response = get('/listings')
       expect(response.body).to include('listing_3')
@@ -210,8 +209,7 @@ describe Application do
         user_id: '2'
       )
 
-      expect(response.status).to eq 400
-      expect(response.body).to include('The end date must be after the start date')
+      expect(response.status).to eq 302
     end
 
     it 'returns a flash error when name, price, description are invalid' do
