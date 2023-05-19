@@ -1,5 +1,11 @@
 <h1>Available Listings</h1>
 
+<% if flash[:listing_success] %>
+    <div class="alert alert-danger" role="alert">
+        <%= flash[:listing_success] %>  
+    </div>
+<% end %>  <br><br><br>
+
 <%# The larger grid holding all the listings %>
 <div class="listings-container">
 
