@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'sinatra/flash'
+require 'stripe'
 require_relative 'lib/listing_repository'
 require_relative 'lib/booking_repository'
 require_relative 'lib/user_repository'
@@ -9,6 +10,11 @@ require_relative 'lib/database_connection'
 DatabaseConnection.connect('bnb_database_test')
 
 class Application < Sinatra::Base
+  YOUR_DOMAIN = 'http://localhost:9292'
+  Stripe.api_key = 'sk_test_26PHem9AhJZvU623DfE1x4sd' #public key
+  set :static, true
+  set :port, 4242
+  
   enable :sessions
   register Sinatra::Flash
 
@@ -83,7 +89,19 @@ class Application < Sinatra::Base
        
     repo.create(@new_booking)
 
-    return ('') 
+    content_type 'application/json'
+
+    session = Stripe::Checkout::Session.create({
+      line_items: [{
+        # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
+        price_data: {currency: 'GBP', product_data: {name: 'example'}, unit_amount: 100},
+        quantity: 1,
+      }],
+      mode: 'payment',
+      success_url: YOUR_DOMAIN + '/success.html',
+      cancel_url: YOUR_DOMAIN + '/cancel.html',
+    })
+    redirect session.url, 303
   end
 
   post '/listings/new' do
