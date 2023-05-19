@@ -94,4 +94,15 @@ RSpec.describe BookingRepository do
       end
     end
   end
+
+  describe "#find_by_user_id" do
+    it "returns an array of bookings by a user" do
+      repo = BookingRepository.new
+      bookings = repo.find_by_user_id(2)
+      expect(bookings.length).to eq 2
+      expect(bookings.first.date).to eq "2023-04-09"
+      expect(bookings.first.listing_id).to eq 1
+      expect(bookings.first.confirmed).to eq false
+    end
+  end
 end

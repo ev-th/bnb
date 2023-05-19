@@ -47,6 +47,22 @@ class BookingRepository
    return bookings
   end
 
+  def find_by_user_id(user_id)
+    sql = "SELECT id, date, confirmed, listing_id, user_id FROM bookings WHERE user_id = $1;"
+    sql_params = [user_id]
+    record_set = DatabaseConnection.exec_params(sql, sql_params)
+ 
+    bookings = []
+ 
+    record_set.each do |record|
+      booking = Booking.new
+      set_attributes(booking, record)
+      bookings << booking
+    end
+    
+    return bookings
+  end
+
   def create(booking)
     sql = 'INSERT INTO bookings (date, confirmed, listing_id, user_id) VALUES($1, $2, $3, $4);'
     sql_params = [booking.date, booking.confirmed, booking.listing_id, booking.user_id]
