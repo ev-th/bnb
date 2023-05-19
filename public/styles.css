@@ -81,6 +81,7 @@ nav a:hover {
 main {
     padding: 2em;
     background-color: whitesmoke;
+    padding-bottom: 5em;
 }
 
 h1 {
@@ -164,15 +165,6 @@ textarea {
     display: block;
     margin-bottom: 10px;
 }
-
-.wrapper {
-    min-height: 100%;
-    position: relative;
-  }
-  
-  .content {
-    padding-bottom: 70px;
-  }
 
 .footer {
     position: fixed;
