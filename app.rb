@@ -162,22 +162,22 @@ class Application < Sinatra::Base
     listing_repo = ListingRepository.new
     @listings = listing_repo.all
     
-    user = User.new
-    user.email = params[:email]
-    user.password = params[:password]
+    @user = User.new
+    @user.email = params[:email]
+    @user.password = params[:password]
     
     repo = UserRepository.new
-    if user.email.empty? || user.password.empty?
+    if @user.email.empty? || @user.password.empty?
       flash[:signup_error] = "Please enter valid email and password"
       redirect "/"
-    elsif user.email.empty? && user.password.empty?
+    elsif @user.email.empty? && @user.password.empty?
       flash[:signup_error] = "Please enter valid email and password"
       redirect "/"
     end
     
-    repo.create(user)
-    erb(:index)
-
+    repo.create(@user)
+    flash[:success] = "Sign up success!"
+    return redirect "/"
   end
   
   post '/login' do
