@@ -20,6 +20,11 @@
                         <%= flash[:signup_error] %>  
                     </div>
                 <% end %>
+                <% if flash[:success] %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= flash[:success] %>  
+                    </div>
+                <% end %>
                 </form>
             </div>
 

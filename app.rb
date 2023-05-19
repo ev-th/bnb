@@ -175,8 +175,8 @@ class Application < Sinatra::Base
     end
     
     repo.create(@user)
-    erb(:index)
-
+    flash[:success] = "Sign up success!"
+    return redirect "/"
   end
   
   post '/login' do
