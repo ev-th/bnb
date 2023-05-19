@@ -140,11 +140,20 @@ class Application < Sinatra::Base
 
       listings = @listing_repo.find_by_user_id(session[:user_id])
       
-      @bookings = []
+      bookings = []
       listings.each do |listing| 
-        @bookings += booking_repo.find_by_listing(listing.id)
+        bookings += booking_repo.find_by_listing(listing.id)
       end
-        erb(:requests)
+
+      @unconfirmed_bookings = bookings.select do |booking|
+        !booking.confirmed
+      end
+
+      @confirmed_bookings = bookings.select do |booking|
+        booking.confirmed
+      end
+
+      erb(:requests)
     end
   end
 
@@ -153,7 +162,7 @@ class Application < Sinatra::Base
     booking = repo.find(params[:id])
 
     repo.confirm_booking(booking)
-      return ("Booking Confirmed!") #Could have a flash pop-up here
+    redirect('/requests')
   end
 
   post '/signup' do

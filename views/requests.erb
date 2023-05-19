@@ -1,11 +1,19 @@
 <h1>Bookings Made On Your Listings<h1>
 
-<% @bookings.each do |booking|%>
+<% @unconfirmed_bookings.each do |booking|%>
     <ul class="request">
     <li>Booking made for <%= @listing_repo.find(booking.listing_id).name%> on <%= booking.formatted_date%></li>
     <li>Contact: <%= @user_repo.find(booking.user_id).email%></li>
     <li><form action="/requests/confirm/<%= booking.id %>" method="POST">
         <input type="submit" value="confirm booking">
     </form></li>
+    </ul>
+<% end %>
+
+<% @confirmed_bookings.each do |booking|%>
+    <ul class="request">
+    <li>Booking made for <%= @listing_repo.find(booking.listing_id).name%> on <%= booking.formatted_date%></li>
+    <li>Contact: <%= @user_repo.find(booking.user_id).email%></li>
+    <li>CONFIRMED</li>
     </ul>
 <% end %>

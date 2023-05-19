@@ -249,7 +249,7 @@ describe Application do
   context 'POST /requests/confirm' do
     it 'post a TRUE value to the database' do
       response = post('/requests/confirm/1')
-      expect(response.status).to eq 200
+      expect(response.status).to eq 302
 
       repo = BookingRepository.new 
       booking = repo.find(1)
@@ -326,6 +326,23 @@ describe Application do
   
       expect(response.body).to include '<nav'
       expect(response.body).to include 'julian@example.com'
+    end
+
+    context 'when a booking is not confirmed' do
+      it 'says confirmed' do
+        login_for_test
+        response = get('/requests')
+        expect(response.body).not_to include 'CONFIRMED'
+      end
+    end
+
+    context 'when a booking is confirmed' do
+      it 'says confirmed' do
+        login_for_test
+        post('/requests/confirm/1')
+        response = get('/requests')
+        expect(response.body).to include 'CONFIRMED'
+      end
     end
   end
 
