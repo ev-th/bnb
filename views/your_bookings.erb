@@ -1,0 +1,8 @@
+<h1>Your Bookings</h1>
+
+  <% @bookings.each do |booking| %>
+    <ul class="your-bookings">
+        <li>Your booking for <%= @listing_repo.find(booking.listing_id).name%> on <%= booking.formatted_date%> </li>
+        <li><%= booking.confirmed ? 'CONFIRMED' : 'UNCONFIRMED' %></li>
+    </ul>
+  <% end %>

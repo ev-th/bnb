@@ -90,7 +90,23 @@ class Application < Sinatra::Base
        
     repo.create(@new_booking)
 
-    return ('') 
+    user_repo = UserRepository.new
+    @user = user_repo.find(session[:user_id])
+    @listing_repo = ListingRepository.new
+    @bookings = repo.find_by_user_id(session[:user_id])
+    
+    return erb(:your_bookings)
+  end
+  
+  get '/your_bookings' do
+    repo = BookingRepository.new
+
+    user_repo = UserRepository.new
+    @user = user_repo.find(session[:user_id])
+
+    @listing_repo = ListingRepository.new
+    @bookings = repo.find_by_user_id(session[:user_id])
+    return erb(:your_bookings)
   end
 
   post '/listings/new' do

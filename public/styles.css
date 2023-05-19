@@ -148,6 +148,18 @@ h1 {
     padding: 0;
 }
 
+.your-bookings li {
+    list-style-type: none;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.your-bookings {
+    margin-bottom: 30px;
+    padding: 0;
+}
+
 /* New listing page */
 
 .new-listing input {
