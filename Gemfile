@@ -21,3 +21,5 @@ gem "sinatra-flash", "~> 0.3.0"
 gem "timecop", "~> 0.9.6"
 
 gem "rspec-simplecov", "~> 0.2.2"
+
+gem "stripe", "~> 8.5"
