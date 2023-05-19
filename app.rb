@@ -106,7 +106,7 @@ class Application < Sinatra::Base
     session = Stripe::Checkout::Session.create({
       line_items: [{
         # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
-        price: '{{PRICE_ID}}',
+        price_data: {currency: 'GBP', product_data: {name: 'example'}, unit_amount: 100},
         quantity: 1,
       }],
       mode: 'payment',
