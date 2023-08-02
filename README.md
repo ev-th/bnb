@@ -1,8 +1,10 @@
 # Merge Masters BNB
 
 ## Introduction
-During our first engineering project at Makers we were requried to make a clone of Airbnb. 
-This was also our first time working in a team. We used Agile practices to ensure our project was a success.
+Merge Masters BnB is an AirBnB clone made as the first group engineering project for [Makers Academy](https://github.com/makersacademy). The app allows a user to create an account and add listings that can be rented out over a range of dates. Users can also browse other users' listings and request to book them. Users can check requests made on their listings and choose whether to accept them.
+
+## Process and Tech
+We followed Agile best practices to complete this project over the span of a week. Merge Masters BnB is a full stack web app built with Ruby, Sinatra, and PostgreSQL. We used test driven development with RSpec. 
 
 ## Demonstration
 
